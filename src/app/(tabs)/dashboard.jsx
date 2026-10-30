@@ -102,7 +102,7 @@ export default function DashboardScreen() {
           </View>
           <View style={styles.chamberBadge}>
             <Ionicons name="home-outline" size={14} color="#60775B" />
-            <Text style={styles.chamberBadgeText}>CHAMBER 1</Text>
+            <Text style={styles.chamberBadgeText}>ROOM 1</Text>
           </View>
         </View>
 
@@ -128,7 +128,7 @@ export default function DashboardScreen() {
             <Text style={styles.statusDescription}>
               {isBalanced
                 ? "Conditions are within their target ranges."
-                : "At least one reading is outside its target range."}
+                : "Some readings are outside their target range."}
             </Text>
           </View>
           <View style={styles.liveTag}>
@@ -139,8 +139,7 @@ export default function DashboardScreen() {
 
         <View style={styles.sectionHeader}>
           <View>
-            <Text style={styles.sectionTitle}>Chamber conditions</Text>
-            <Text style={styles.sectionCaption}>Updated just now</Text>
+            <Text style={styles.sectionTitle}>Room conditions</Text>
           </View>
           <View style={styles.updatedIcon}>
             <Ionicons name="pulse-outline" size={18} color="#5C7B5D" />
@@ -194,7 +193,9 @@ export default function DashboardScreen() {
           <ActuatorRow
             icon="sync-outline"
             title="Fresh air fan"
-            description={telemetry.fanStatus ? "Running · Automatic" : "Paused"}
+            description={
+              telemetry.fanStatus ? "Running · Automatic" : "Standby"
+            }
             color="#4F8060"
             iconBackground="#EDF3E9"
             value={telemetry.fanStatus}
@@ -211,7 +212,7 @@ export default function DashboardScreen() {
             onValueChange={(value) => toggleActuator("humidifierStatus", value)}
           />
         </View>
-        <Text style={styles.bottomNote}>SMALL ADJUSTMENTS, HAPPIER GROWS</Text>
+        <Text style={styles.bottomNote}>SMALL ADJUSTMENTS, HAPPIER GROWTH</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -385,12 +386,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: "#2D3C31",
     fontSize: 14,
+    marginLeft: 10,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.3,
   },
   sectionCaption: {
     color: "#899286",
     fontSize: 11,
+    marginLeft: 10,
     fontFamily: "Pliant-Regular",
     marginTop: 4,
   },
@@ -496,7 +499,7 @@ const styles = StyleSheet.create({
   actuatorTitle: {
     color: "#334237",
     fontSize: 12,
-    fontFamily: "Pliant-Bold",
+    fontFamily: "Pliant-Regular",
     marginBottom: 4,
   },
   actuatorDescription: {

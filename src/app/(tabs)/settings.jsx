@@ -12,7 +12,6 @@ import {
 } from "react-native";
 
 export default function SettingsScreen() {
-  const [brokerUrl, setBrokerUrl] = useState("mqtt://192.168.1.120:1883");
   const [targetHumidity, setTargetHumidity] = useState("90");
   const [targetTemp, setTargetTemp] = useState("24");
   const [autoControl, setAutoControl] = useState(true);
@@ -78,7 +77,7 @@ export default function SettingsScreen() {
           <View>
             <Text style={styles.sectionTitle}>Target conditions</Text>
             <Text style={styles.sectionCaption}>
-              Set the range for a happy fruiting chamber
+              Set the range for your room
             </Text>
           </View>
         </View>
@@ -98,46 +97,12 @@ export default function SettingsScreen() {
             icon="thermometer-outline"
             iconColor="#B7654F"
             label="Temperature"
-            description="Keep the chamber nice and steady"
+            description="Keep the room nice and steady"
             value={targetTemp}
             onChangeText={setTargetTemp}
             unit="°C"
             accessibilityLabel="Target temperature"
           />
-        </View>
-
-        <View style={styles.sectionHeading}>
-          <View style={[styles.sectionIcon, styles.sectionIconGold]}>
-            <Ionicons name="wifi-outline" size={17} color="#A07936" />
-          </View>
-          <View>
-            <Text style={styles.sectionTitle}>Device connection</Text>
-            <Text style={styles.sectionCaption}>
-              Connect your chamber to its sensor broker
-            </Text>
-          </View>
-        </View>
-        <View style={styles.connectionCard}>
-          <Text style={styles.fieldLabel}>MQTT server address</Text>
-          <View style={styles.addressInput}>
-            <Ionicons name="server-outline" size={17} color="#899286" />
-            <TextInput
-              accessibilityLabel="MQTT server address"
-              style={styles.textInput}
-              value={brokerUrl}
-              onChangeText={setBrokerUrl}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="url"
-              returnKeyType="done"
-              placeholder="mqtt://your-server:1883"
-              placeholderTextColor="#A6ADA2"
-              selectTextOnFocus
-            />
-          </View>
-          <Text style={styles.inputHint}>
-            The address used by your chamber to share sensor readings.
-          </Text>
         </View>
 
         <TouchableOpacity
@@ -146,7 +111,7 @@ export default function SettingsScreen() {
           style={styles.saveButton}
         >
           <Ionicons name="checkmark-circle-outline" size={19} color="#FFFFFF" />
-          <Text style={styles.saveButtonText}>Save configuration</Text>
+          <Text style={styles.saveButtonText}>Save settings</Text>
           <Ionicons name="arrow-forward" size={17} color="#D8E7C5" />
         </TouchableOpacity>
         <Text style={styles.footerText}>A LITTLE CARE GOES A LONG WAY</Text>

@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const features = [
   {
     icon: "thermometer-outline",
-    title: "Climate, in balance",
+    title: "Climate in balance",
     description: "Keep temperature and humidity in their ideal ranges.",
   },
   {
@@ -42,10 +42,6 @@ export default function LandingScreen() {
             <Ionicons name="leaf" size={20} color="#F8F7F1" />
           </View>
           <Text style={styles.brandName}>Mycosense</Text>
-          <View style={styles.brandPill}>
-            <View style={styles.brandDot} />
-            <Text style={styles.brandPillText}>GROW BETTER</Text>
-          </View>
         </View>
 
         <View style={styles.heroCard}>
@@ -53,14 +49,16 @@ export default function LandingScreen() {
           <View style={styles.heroOrbSmall} />
           <View style={styles.heroEyebrow}>
             <Ionicons name="sunny-outline" size={15} color="#D8E7C5" />
-            <Text style={styles.heroEyebrowText}>YOUR GROW, IN GOOD HANDS</Text>
+            <Text style={styles.heroEyebrowText}>
+              YOUR HARVEST IS IN GOOD HANDS
+            </Text>
           </View>
           <Text style={styles.heroTitle}>
             A healthier{"\n"}home for your{"\n"}
-            <Text style={styles.heroTitleAccent}>next harvest.</Text>
+            <Text style={styles.heroTitleAccent}>harvest.</Text>
           </Text>
           <Text style={styles.heroDescription}>
-            A calmer way to care for your growing environment. See what your
+            A convinient way to care for your growing environment. See what your
             chamber needs, all in one place.
           </Text>
           <TouchableOpacity
@@ -69,7 +67,7 @@ export default function LandingScreen() {
             activeOpacity={0.85}
             onPress={() => router.replace("/(tabs)/dashboard")}
           >
-            <Text style={styles.primaryButtonText}>Explore your chamber</Text>
+            <Text style={styles.primaryButtonText}>Get started</Text>
             <View style={styles.buttonIcon}>
               <Ionicons name="arrow-forward" size={17} color="#244B36" />
             </View>
@@ -83,7 +81,7 @@ export default function LandingScreen() {
         </View>
 
         <View style={styles.sectionHeading}>
-          <Text style={styles.sectionEyebrow}>MADE FOR YOUR GROW ROOM</Text>
+          <Text style={styles.sectionEyebrow}>MADE FOR HEALTHIER GROWTH</Text>
           <Text style={styles.sectionTitle}>Everything in its element.</Text>
         </View>
 
@@ -134,7 +132,7 @@ export default function LandingScreen() {
               onPress={() => router.push("/contact")}
               accessibilityRole="button"
             >
-              <Text style={styles.footerLink}>Contact</Text>
+              <Text style={styles.footerLink}>Contact Us</Text>
             </Pressable>
             <Pressable
               onPress={() => router.push("/(auth)/register")}
@@ -241,7 +239,7 @@ const styles = StyleSheet.create({
     fontFamily: "GoogleSans-SemiBold",
     marginTop: 5,
     letterSpacing: 1.15,
-    marginLeft: 7,
+    marginLeft: 3,
   },
   heroTitle: {
     color: "#FAF9F3",
