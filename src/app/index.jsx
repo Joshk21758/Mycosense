@@ -65,9 +65,9 @@ export default function LandingScreen() {
             accessibilityRole="button"
             style={styles.primaryButton}
             activeOpacity={0.85}
-            onPress={() => router.replace("/(tabs)/dashboard")}
+            onPress={() => router.push("/(tabs)/dashboard")}
           >
-            <Text style={styles.primaryButtonText}>Get started</Text>
+            <Text style={styles.primaryButtonText}>Dashboard</Text>
             <View style={styles.buttonIcon}>
               <Ionicons name="arrow-forward" size={17} color="#244B36" />
             </View>
@@ -118,7 +118,7 @@ export default function LandingScreen() {
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerDescription}>
-            GROW BETTER WITH MYCOSENSE
+            GROW BETTER & HEALTHIER HARVEST
           </Text>
           <View style={styles.footerDivider} />
           <View style={styles.footerLinks}>

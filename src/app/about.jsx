@@ -55,7 +55,7 @@ export default function AboutScreen() {
             style={{ marginTop: -5 }}
             color="#D8E7C5"
           />
-          <Text style={styles.heroBadgeText}>A CALMER WAY TO GROW</Text>
+          <Text style={styles.heroBadgeText}>A SMARTER WAY TO GROW</Text>
         </View>
         <Text style={styles.heroTitle}>
           Good growing{"\n"}starts with{"\n"}
@@ -68,9 +68,9 @@ export default function AboutScreen() {
       </View>
 
       <PageIntro
-        eyebrow="WHY ECOSENSE"
+        eyebrow="WHY MYCOSENSE"
         title="A little more in tune with nature."
-        description="A healthy grow space is all about balance. We make it easier to understand what is happening and know where to start."
+        description="A healthy grow space is all about balance. Mycosense makes it easier to understand what is happening and know where to start."
       />
 
       <View style={styles.principleList}>
@@ -105,10 +105,10 @@ export default function AboutScreen() {
         <Text style={styles.closingTitle}>Small signals. Better growing.</Text>
         <Text style={styles.closingCopy}>
           Whether you are just getting started or refining your routine,
-          Ecosense is here to make the process feel clearer.
+          mycosense is here to make the process feel clearer.
         </Text>
         <PrimaryButton
-          label="Explore your chamber"
+          label="Get started"
           onPress={() => router.push("/(tabs)/dashboard")}
         />
       </View>

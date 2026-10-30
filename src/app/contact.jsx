@@ -45,9 +45,9 @@ export default function ContactScreen() {
         onActionPress={() => router.push("/about")}
       />
       <PageIntro
-        eyebrow="LET US TALK"
-        title="How can we help your grow?"
-        description="Questions about your chamber, the app, or getting started? Leave us a note and we will point you in the right direction."
+        eyebrow="LET US CONNECT"
+        title="How can we help you grow smarter?"
+        description="Questions about the app or getting started? Leave us a note and we will point you in the right direction."
       />
 
       <View style={styles.supportCard}>
@@ -59,26 +59,23 @@ export default function ContactScreen() {
           />
         </View>
         <View style={styles.supportCopy}>
-          <Text style={styles.supportTitle}>
-            A real person, a thoughtful reply
-          </Text>
           <Text style={styles.supportDescription}>
-            Tell us what you are working on and what you need a hand with.
+            Feel free to Reach out to us
           </Text>
         </View>
       </View>
 
       <View style={styles.formCard}>
-        <Text style={styles.formTitle}>Send us a message</Text>
+        <Text style={styles.formTitle}>Send us a feedback</Text>
         <Text style={styles.formDescription}>
           Fields marked below are needed to get back to you.
         </Text>
         <FormField
-          label="Your name"
+          label="Full name"
           icon="person-outline"
           value={name}
           onChangeText={setName}
-          placeholder="e.g. Alex Green"
+          placeholder="Enter your name"
           textContentType="name"
         />
         <FormField
@@ -86,14 +83,14 @@ export default function ContactScreen() {
           icon="mail-outline"
           value={email}
           onChangeText={setEmail}
-          placeholder="you@example.com"
+          placeholder="youremail@example.com"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
           textContentType="emailAddress"
         />
         <FormField
-          label="What’s on your mind?"
+          label="Message"
           icon="create-outline"
           value={message}
           onChangeText={setMessage}

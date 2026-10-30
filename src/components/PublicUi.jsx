@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
   fieldLabel: {
     color: "#48564A",
     fontSize: 12,
+    marginLeft: 5,
     fontFamily: "GoogleSans-SemiBold",
     marginBottom: 7,
   },

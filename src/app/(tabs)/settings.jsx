@@ -26,7 +26,7 @@ export default function SettingsScreen() {
         <View style={styles.pageHeading}>
           <Text style={styles.pageTitle}>Chamber settings</Text>
           <Text style={styles.pageSubtitle}>
-            Fine-tune the conditions your grow loves.
+            Fine-tune your settings for better analysis.
           </Text>
         </View>
 
@@ -114,7 +114,6 @@ export default function SettingsScreen() {
           <Text style={styles.saveButtonText}>Save settings</Text>
           <Ionicons name="arrow-forward" size={17} color="#D8E7C5" />
         </TouchableOpacity>
-        <Text style={styles.footerText}>A LITTLE CARE GOES A LONG WAY</Text>
       </ScrollView>
     </SafeAreaView>
   );

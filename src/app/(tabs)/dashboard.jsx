@@ -94,12 +94,6 @@ export default function DashboardScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.topBar}>
-          <View style={styles.brandLockup}>
-            <View style={styles.brandMark}>
-              <Ionicons name="leaf" size={18} color="#F8F7F1" />
-            </View>
-            <Text style={styles.brandName}>Mycosense</Text>
-          </View>
           <View style={styles.chamberBadge}>
             <Ionicons name="home-outline" size={14} color="#60775B" />
             <Text style={styles.chamberBadgeText}>ROOM 1</Text>
@@ -108,7 +102,7 @@ export default function DashboardScreen() {
 
         <View style={styles.pageHeading}>
           <Text style={styles.eyebrow}>YOUR GROW SPACE</Text>
-          <Text style={styles.pageTitle}>Looking good in here.</Text>
+          <Text style={styles.pageTitle}>Monitor your conditions</Text>
           <Text style={styles.pageSubtitle}>
             Oyster mushroom <Text style={styles.subtitleDot}>·</Text> Fruiting
             phase
@@ -309,7 +303,7 @@ const styles = StyleSheet.create({
   },
   pageTitle: {
     color: "#26382C",
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "Pliant-Bold",
     letterSpacing: -1,
   },
