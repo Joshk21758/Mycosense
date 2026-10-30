@@ -102,7 +102,7 @@ export default function DashboardScreen() {
           </View>
           <View style={styles.chamberBadge}>
             <Ionicons name="home-outline" size={14} color="#60775B" />
-            <Text style={styles.chamberBadgeText}>CHAMBER 01</Text>
+            <Text style={styles.chamberBadgeText}>CHAMBER 1</Text>
           </View>
         </View>
 
