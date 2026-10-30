@@ -26,9 +26,7 @@ export default function LoginScreen() {
     }
 
     setNoticeTone("info");
-    setNotice(
-      "Sign-in is not connected yet. Your details have not been sent.",
-    );
+    setNotice("Sign-in is not connected yet. Your details have not been sent.");
   };
 
   return (
@@ -78,7 +76,9 @@ export default function LoginScreen() {
           <Text style={styles.forgotLink}>Forgot password?</Text>
         </TouchableOpacity>
         <PrimaryButton label="Sign in" onPress={signIn} />
-        {notice ? <InlineNotice tone={noticeTone}>{notice}</InlineNotice> : null}
+        {notice ? (
+          <InlineNotice tone={noticeTone}>{notice}</InlineNotice>
+        ) : null}
       </View>
 
       <View style={styles.signUpPrompt}>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   promptText: {
     color: "#7D887D",
     fontSize: 13,
-    fontFamily: "GoogleSans-Regular",
+    fontFamily: "Pliant-Regular",
     marginRight: 5,
   },
   promptLink: {
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   trustText: {
     color: "#879286",
     fontSize: 11,
-    fontFamily: "GoogleSans-Regular",
+    fontFamily: "Pliant-Regular",
     marginLeft: 6,
   },
 });

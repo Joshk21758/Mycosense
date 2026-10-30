@@ -38,7 +38,8 @@
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.BACKGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-      ]
+      ],
+      "package": "com.joshkunda.mycosense"
     },
     "web": {
       "output": "server",
