@@ -13,22 +13,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const highlights = [
   {
     icon: "pulse-outline",
-    title: "See how your room is doing",
-    description: "Check the temperature, moisture, and air in your grow room at a glance.",
+    title: "See how your mushrooms are doing",
+    description:
+      "Check the heat, moisture, and fresh air in your farm room to monitor live sensor readings.",
     color: "#447858",
     background: "#E8F0E7",
   },
   {
     icon: "calculator-outline",
-    title: "Plan your next harvest",
-    description: "Estimate your harvest, income, and growing costs.",
+    title: "Calculate your profits and crop yield",
+    description: "Estimate your harvest, cash flow, costs.",
     color: "#A47C3D",
     background: "#F5EFE2",
   },
   {
     icon: "scan-outline",
-    title: "Spot crop problems early",
-    description: "Take photos and keep an eye on your mushrooms.",
+    title: "Check for infections in your mushrooms",
+    description:
+      "Use your camera to take photos of your plants and get the best remedies.",
     color: "#557C91",
     background: "#E9F0F2",
   },
@@ -54,21 +56,15 @@ export default function LandingScreen() {
 
         <View style={styles.heroCard}>
           <View style={styles.heroGlow} />
-          <View style={styles.heroTopline}>
-            <View style={styles.heroBadge}>
-              <View style={styles.heroBadgeDot} />
-              <Text style={styles.heroBadgeText}>GROW WITH EASE</Text>
-            </View>
-            <View style={styles.heroLeaf}>
-              <Ionicons name="leaf-outline" size={25} color="#DCE8CA" />
-            </View>
-          </View>
+          <View style={styles.heroTopline}></View>
           <Text style={styles.heroTitle}>
-            A healthier crop{"\n"}starts with{"\n"}
-            <Text style={styles.heroAccent}>a quick check-in.</Text>
+            Grow your mushrooms{"\n"}with{"\n"}
+            <Text style={styles.heroAccent}>ease and control.</Text>
           </Text>
           <Text style={styles.heroDescription}>
-            Keep an eye on your mushroom room and plan what happens next.
+            We as Myconsense help our mushroom growing farmers make better
+            decisions and actionable steps to prevent crop loss & damage. With
+            the help of environmental sensors to monitor your crops efficiently.
           </Text>
           <TouchableOpacity
             accessibilityRole="button"
@@ -76,7 +72,7 @@ export default function LandingScreen() {
             style={styles.primaryButton}
             onPress={() => router.push("/(tabs)/dashboard")}
           >
-            <Text style={styles.primaryButtonText}>Open dashboard</Text>
+            <Text style={styles.primaryButtonText}>Get started</Text>
             <View style={styles.buttonIcon}>
               <Ionicons name="arrow-forward" size={17} color="#244B36" />
             </View>
@@ -88,37 +84,20 @@ export default function LandingScreen() {
               color="#DCE8CA"
             />
             <Text style={styles.heroNoteText}>
-              Your whole growing setup in one place
+              Read the information to below to help you get started.
             </Text>
           </View>
         </View>
 
         <View style={styles.sectionHeading}>
           <View>
-            <Text style={styles.sectionEyebrow}>YOUR GROWING HELP</Text>
-            <Text style={styles.sectionTitle}>
-              Everything you need to support your crop.
-            </Text>
-          </View>
-          <View style={styles.sectionMark}>
-            <Ionicons name="sparkles-outline" size={17} color="#65845A" />
+            <Text style={styles.sectionEyebrow}>HOW THE APP WORKS</Text>
           </View>
         </View>
 
         <View style={styles.featureList}>
           {highlights.map((feature, index) => (
             <View key={feature.title} style={styles.featureCard}>
-              <View
-                style={[
-                  styles.featureNumber,
-                  index === 1 && styles.featureNumberGold,
-                  index === 2 && styles.featureNumberBlue,
-                ]}
-              >
-                <Text style={styles.featureNumberText}>
-                  {String(index + 1).padStart(2, "0")}
-                </Text>
-              </View>
               <View
                 style={[
                   styles.featureIcon,
@@ -140,11 +119,8 @@ export default function LandingScreen() {
 
         <View style={styles.footer}>
           <View style={styles.footerBrand}>
-            <View style={styles.footerMark}>
-              <Ionicons name="leaf" size={13} color="#F8F7F1" />
-            </View>
             <Text style={styles.footerBrandText}>
-              A little more room to grow with confidence.
+              Let us help you improve your harvest
             </Text>
           </View>
           <View style={styles.footerLinks}>
@@ -152,21 +128,21 @@ export default function LandingScreen() {
               onPress={() => router.push("/about")}
               accessibilityRole="button"
             >
-              <Text style={styles.footerLink}>About</Text>
+              <Text style={styles.footerLink}>About Us</Text>
             </Pressable>
             <View style={styles.footerDot} />
             <Pressable
               onPress={() => router.push("/contact")}
               accessibilityRole="button"
             >
-              <Text style={styles.footerLink}>Contact</Text>
+              <Text style={styles.footerLink}>Contact Us</Text>
             </Pressable>
             <View style={styles.footerDot} />
             <Pressable
               onPress={() => router.push("/(auth)/register")}
               accessibilityRole="button"
             >
-              <Text style={styles.footerLink}>Create account</Text>
+              <Text style={styles.footerLink}>Sign Up</Text>
             </Pressable>
           </View>
           <Text style={styles.footerCopyright}>MYCOSENSE · BETA</Text>
@@ -279,7 +255,7 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: "#FAF9F3",
-    fontSize: 31,
+    fontSize: 27,
     lineHeight: 38,
     fontFamily: "Pliant-Bold",
     letterSpacing: -1.1,
