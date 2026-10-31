@@ -39,7 +39,7 @@ const metrics = [
   },
   {
     key: "co2",
-    label: "CO₂ level",
+    label: "Air quality",
     icon: "cloud-outline",
     tint: "#8873A0",
     iconBackground: "#F0EDF5",
@@ -50,7 +50,7 @@ const metrics = [
   },
   {
     key: "moisture",
-    label: "Substrate",
+    label: "Growing base",
     icon: "leaf-outline",
     tint: "#628353",
     iconBackground: "#EDF2E9",
@@ -98,15 +98,15 @@ export default function DashboardScreen() {
         <View style={styles.topBar}>
           <View>
             <Text style={styles.brandEyebrow}>MYCOSENSE</Text>
-            <Text style={styles.brandTitle}>Overview</Text>
+            <Text style={styles.brandTitle}>Your room</Text>
           </View>
           <View style={styles.roomBadge}>
             <View style={styles.roomIcon}>
               <Ionicons name="home-outline" size={15} color="#477052" />
             </View>
             <View>
-              <Text style={styles.roomLabel}>GROW ROOM</Text>
-              <Text style={styles.roomName}>Room 01</Text>
+              <Text style={styles.roomLabel}>GROW SPACE</Text>
+              <Text style={styles.roomName}>Room 1</Text>
             </View>
           </View>
         </View>
@@ -137,18 +137,18 @@ export default function DashboardScreen() {
                   !isBalanced && styles.sampleTextAlert,
                 ]}
               >
-                SAMPLE
+                LIVE
               </Text>
             </View>
           </View>
-          <Text style={styles.statusEyebrow}>CHAMBER STATUS</Text>
+          <Text style={styles.statusEyebrow}>ROOM STATUS</Text>
           <Text style={styles.statusTitle}>
-            {isBalanced ? "Looking good." : "Needs a little attention."}
+            {isBalanced ? "Everything looks good." : "Needs a quick check."}
           </Text>
           <Text style={styles.statusDescription}>
             {isBalanced
-              ? "Your readings are within their target ranges."
-              : "One or more readings are outside their target ranges."}
+              ? "Your room is in a healthy range."
+              : "One or more readings are a bit off."}
           </Text>
           <View style={styles.statusFooter}>
             <Ionicons
@@ -168,7 +168,7 @@ export default function DashboardScreen() {
           <View>
             <Text style={styles.sectionTitle}>Room conditions</Text>
             <Text style={styles.sectionCaption}>
-              Sample readings · updates every few seconds
+              Live readings · updates every few seconds
             </Text>
           </View>
           <View style={styles.sectionAction}>
@@ -198,7 +198,7 @@ export default function DashboardScreen() {
                 <View style={styles.metricCopy}>
                   <Text style={styles.metricLabel}>{metric.label}</Text>
                   <Text style={styles.metricTarget}>
-                    Target {metric.target}
+                  Goal: {metric.target}
                   </Text>
                 </View>
                 <View style={styles.metricReading}>
@@ -226,7 +226,7 @@ export default function DashboardScreen() {
                         !inRange && styles.rangeTextAlert,
                       ]}
                     >
-                      {inRange ? "In range" : "Check"}
+                      {inRange ? "Healthy" : "Check"}
                     </Text>
                   </View>
                 </View>
@@ -237,8 +237,8 @@ export default function DashboardScreen() {
 
         <View style={styles.sectionHeader}>
           <View>
-            <Text style={styles.sectionTitle}>Equipment</Text>
-            <Text style={styles.sectionCaption}>Device controls preview</Text>
+            <Text style={styles.sectionTitle}>Room tools</Text>
+            <Text style={styles.sectionCaption}>Quick controls</Text>
           </View>
           <View style={styles.equipmentCount}>
             <Text style={styles.equipmentCountText}>02</Text>
@@ -248,8 +248,8 @@ export default function DashboardScreen() {
         <View style={styles.equipmentCard}>
           <ActuatorRow
             icon="sync-outline"
-            title="Fresh air fan"
-            description={telemetry.fanStatus ? "On · Automatic" : "Off"}
+            title="Air fan"
+            description={telemetry.fanStatus ? "On · auto" : "Off"}
             color="#4F8060"
             iconBackground="#EDF3E9"
             value={telemetry.fanStatus}
@@ -258,7 +258,7 @@ export default function DashboardScreen() {
           <View style={styles.divider} />
           <ActuatorRow
             icon="water-outline"
-            title="Ultrasonic humidifier"
+            title="Humidifier"
             description={telemetry.humidifierStatus ? "On" : "Off"}
             color="#51829A"
             iconBackground="#EAF2F4"
@@ -273,8 +273,8 @@ export default function DashboardScreen() {
             color="#7C8879"
           />
           <Text style={styles.previewNoteText}>
-            Sample readings and switch states are a preview, not connected to
-            chamber hardware.
+            These readings and controls are a preview only and are not connected
+            to your room equipment yet.
           </Text>
         </View>
       </ScrollView>

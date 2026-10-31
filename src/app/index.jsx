@@ -13,22 +13,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const highlights = [
   {
     icon: "pulse-outline",
-    title: "Know your conditions",
-    description: "See your grow-room climate at a glance.",
+    title: "See how your room is doing",
+    description: "Check the temperature, moisture, and air in your grow room at a glance.",
     color: "#447858",
     background: "#E8F0E7",
   },
   {
     icon: "calculator-outline",
-    title: "Plan your harvest",
-    description: "Estimate yield, revenue, and growing costs.",
+    title: "Plan your next harvest",
+    description: "Estimate your harvest, income, and growing costs.",
     color: "#A47C3D",
     background: "#F5EFE2",
   },
   {
     icon: "scan-outline",
-    title: "Check mushroom health",
-    description: "Capture photos and keep an eye on your crop.",
+    title: "Spot crop problems early",
+    description: "Take photos and keep an eye on your mushrooms.",
     color: "#557C91",
     background: "#E9F0F2",
   },
@@ -57,19 +57,18 @@ export default function LandingScreen() {
           <View style={styles.heroTopline}>
             <View style={styles.heroBadge}>
               <View style={styles.heroBadgeDot} />
-              <Text style={styles.heroBadgeText}>GROW WITH CONFIDENCE</Text>
+              <Text style={styles.heroBadgeText}>GROW WITH EASE</Text>
             </View>
             <View style={styles.heroLeaf}>
               <Ionicons name="leaf-outline" size={25} color="#DCE8CA" />
             </View>
           </View>
           <Text style={styles.heroTitle}>
-            Better growth{"\n"}start with{"\n"}
-            <Text style={styles.heroAccent}>a little insight.</Text>
+            A healthier crop{"\n"}starts with{"\n"}
+            <Text style={styles.heroAccent}>a quick check-in.</Text>
           </Text>
           <Text style={styles.heroDescription}>
-            Your mushroom grow, made easier to understand. Keep track of your
-            conditions and plan what comes next.
+            Keep an eye on your mushroom room and plan what happens next.
           </Text>
           <TouchableOpacity
             accessibilityRole="button"
@@ -77,7 +76,7 @@ export default function LandingScreen() {
             style={styles.primaryButton}
             onPress={() => router.push("/(tabs)/dashboard")}
           >
-            <Text style={styles.primaryButtonText}>View dashboard</Text>
+            <Text style={styles.primaryButtonText}>Open dashboard</Text>
             <View style={styles.buttonIcon}>
               <Ionicons name="arrow-forward" size={17} color="#244B36" />
             </View>
@@ -89,16 +88,16 @@ export default function LandingScreen() {
               color="#DCE8CA"
             />
             <Text style={styles.heroNoteText}>
-              Your grow space, all in one place
+              Your whole growing setup in one place
             </Text>
           </View>
         </View>
 
         <View style={styles.sectionHeading}>
           <View>
-            <Text style={styles.sectionEyebrow}>MADE FOR YOUR GROW</Text>
+            <Text style={styles.sectionEyebrow}>YOUR GROWING HELP</Text>
             <Text style={styles.sectionTitle}>
-              Everything you need to grow.
+              Everything you need to support your crop.
             </Text>
           </View>
           <View style={styles.sectionMark}>
@@ -145,7 +144,7 @@ export default function LandingScreen() {
               <Ionicons name="leaf" size={13} color="#F8F7F1" />
             </View>
             <Text style={styles.footerBrandText}>
-              A little more room to grow.
+              A little more room to grow with confidence.
             </Text>
           </View>
           <View style={styles.footerLinks}>

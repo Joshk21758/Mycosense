@@ -44,19 +44,19 @@ export default function SettingsScreen() {
             <Ionicons name="options-outline" size={18} color="#477052" />
           </View>
           <View style={styles.topCopy}>
-            <Text style={styles.topEyebrow}>PERSONALIZE YOUR GROW</Text>
-            <Text style={styles.topTitle}>Settings</Text>
+            <Text style={styles.topEyebrow}>SET YOUR GROW ROOM</Text>
+            <Text style={styles.topTitle}>Room settings</Text>
           </View>
         </View>
 
         <View style={styles.introCard}>
           <View style={styles.introCopy}>
-            <Text style={styles.introEyebrow}>YOUR GROW SPACE</Text>
+            <Text style={styles.introEyebrow}>YOUR GROW ROOM</Text>
             <Text style={styles.introTitle}>
-              A comfortable climate starts here.
+              Set a comfortable space for your crop.
             </Text>
             <Text style={styles.introDescription}>
-              Set the targets you want to keep an eye on.
+              Choose the room conditions you want to aim for.
             </Text>
           </View>
           <View style={styles.introIcon}>
@@ -70,9 +70,9 @@ export default function SettingsScreen() {
             <Text style={styles.sectionNumberText}>01</Text>
           </View>
           <View>
-            <Text style={styles.sectionTitle}>Automation</Text>
+            <Text style={styles.sectionTitle}>Auto care</Text>
             <Text style={styles.sectionCaption}>
-              Choose how you prefer to manage the chamber
+              Choose how you want your room managed
             </Text>
           </View>
         </View>
@@ -104,15 +104,15 @@ export default function SettingsScreen() {
                   !autoControl && styles.automationStatusTextPaused,
                 ]}
               >
-                {autoControl ? "PREFERENCE ON" : "PAUSED"}
+                {autoControl ? "ON" : "OFF"}
               </Text>
             </View>
           </View>
           <View style={styles.automationBody}>
             <View style={styles.automationCopy}>
-              <Text style={styles.cardTitle}>Automatic control</Text>
+              <Text style={styles.cardTitle}>Auto care</Text>
               <Text style={styles.cardDescription}>
-                Keep your environment close to its target conditions.
+                Keep your room close to the comfort levels you want.
               </Text>
             </View>
             <Switch
@@ -132,7 +132,7 @@ export default function SettingsScreen() {
               color="#889184"
             />
             <Text style={styles.automationFootText}>
-              This preference is not connected to chamber hardware yet.
+              This setting is not connected to your room equipment yet.
             </Text>
           </View>
         </View>
@@ -146,9 +146,9 @@ export default function SettingsScreen() {
             </Text>
           </View>
           <View>
-            <Text style={styles.sectionTitle}>Target conditions</Text>
+            <Text style={styles.sectionTitle}>Comfort targets</Text>
             <Text style={styles.sectionCaption}>
-              Set a reference for your room
+              Choose the room comfort levels you want
             </Text>
           </View>
         </View>
@@ -157,23 +157,23 @@ export default function SettingsScreen() {
           <SettingInput
             icon="water-outline"
             iconColor="#51829A"
-            label="Relative humidity"
-            description="A comfortable level for moisture"
+            label="Humidity"
+            description="How moist you want the room to feel"
             value={targetHumidity}
             onChangeText={updateHumidity}
             unit="%"
-            range="Typical target · 85–95%"
-            accessibilityLabel="Target relative humidity"
+            range="Good range · 85–95%"
+            accessibilityLabel="Target humidity"
           />
           <SettingInput
             icon="thermometer-outline"
             iconColor="#B7654F"
             label="Temperature"
-            description="Keep the room moderate and steady"
+            description="Keep the room comfortable and steady"
             value={targetTemp}
             onChangeText={updateTemperature}
             unit="°C"
-            range="Typical target · 22–25°C"
+            range="Good range · 22–25°C"
             accessibilityLabel="Target temperature"
           />
         </View>
@@ -192,7 +192,7 @@ export default function SettingsScreen() {
             />
           </View>
           <Text style={styles.saveButtonText}>
-            {isSaved ? "Saved for this session" : "Save preferences"}
+            {isSaved ? "Saved for now" : "Save changes"}
           </Text>
           {!isSaved ? (
             <Ionicons name="arrow-forward" size={17} color="#D8E7C5" />
@@ -205,8 +205,8 @@ export default function SettingsScreen() {
             color="#7C8879"
           />
           <Text style={styles.noteText}>
-            Preferences are kept for this session only. Chamber hardware sync
-            isn’t connected.
+            These changes are saved only for this session. Your room equipment
+            isn’t connected yet.
           </Text>
         </View>
       </ScrollView>

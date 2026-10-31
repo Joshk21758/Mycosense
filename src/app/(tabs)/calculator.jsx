@@ -76,18 +76,18 @@ export default function CalculatorScreen() {
         <View style={styles.heading}>
           <View style={styles.eyebrowWrap}>
             <Ionicons name="leaf-outline" size={13} color="#648256" />
-            <Text style={styles.eyebrow}>HARVEST PLANNER</Text>
+            <Text style={styles.eyebrow}>CROP PLANNER</Text>
           </View>
-          <Text style={styles.pageTitle}>Make your next batch count.</Text>
+          <Text style={styles.pageTitle}>Plan your next batch.</Text>
           <Text style={styles.pageSubtitle}>
-            A quick estimate of what your grow could yield and earn.
+            A simple estimate of what your grow could produce and earn.
           </Text>
         </View>
 
         <View style={styles.resultCard}>
           <View style={styles.resultHeader}>
             <View>
-              <Text style={styles.resultLabel}>ESTIMATED NET PROFIT</Text>
+              <Text style={styles.resultLabel}>ESTIMATED PROFIT</Text>
               <Text
                 style={[
                   styles.profitValue,
@@ -120,7 +120,7 @@ export default function CalculatorScreen() {
             </View>
           </View>
           <Text style={styles.resultHint}>
-            After {formatCurrency(results.costs)} in grow costs
+            After {formatCurrency(results.costs)} in growing costs
           </Text>
           <View style={styles.resultDivider} />
           <View style={styles.quickResults}>
@@ -129,7 +129,7 @@ export default function CalculatorScreen() {
                 <Ionicons name="leaf-outline" size={16} color="#D9E7C8" />
               </View>
               <View style={styles.quickResultCopy}>
-                <Text style={styles.quickResultLabel}>EXPECTED YIELD</Text>
+                <Text style={styles.quickResultLabel}>ESTIMATED HARVEST</Text>
                 <Text style={styles.quickResultValue}>
                   {formatNumber(results.yieldKg)} kg
                 </Text>
@@ -141,7 +141,7 @@ export default function CalculatorScreen() {
                 <Ionicons name="cash-outline" size={16} color="#D9E7C8" />
               </View>
               <View style={styles.quickResultCopy}>
-                <Text style={styles.quickResultLabel}>POTENTIAL REVENUE</Text>
+                <Text style={styles.quickResultLabel}>POSSIBLE INCOME</Text>
                 <Text style={styles.quickResultValue}>
                   {formatCurrency(results.revenue)}
                 </Text>
@@ -156,9 +156,9 @@ export default function CalculatorScreen() {
             <Ionicons name="options-outline" size={17} color="#648256" />
           </View>
           <View style={styles.sectionHeadingCopy}>
-            <Text style={styles.sectionTitle}>Your batch details</Text>
+            <Text style={styles.sectionTitle}>Your batch info</Text>
             <Text style={styles.sectionCaption}>
-              Change any value to update your estimate
+              Update any number to see a new estimate
             </Text>
           </View>
           <TouchableOpacity
@@ -176,41 +176,41 @@ export default function CalculatorScreen() {
           <CalculatorField
             icon="layers-outline"
             iconColor="#648256"
-            label="Dry substrate"
-            description="Amount of dry substrate"
+            label="Growing material"
+            description="How much growing material you have"
             value={inputs.substrate}
             onChangeText={(value) => updateInput("substrate", value)}
             unit="kg"
-            accessibilityLabel="Dry substrate amount in kilograms"
+            accessibilityLabel="Growing material amount in kilograms"
           />
           <View style={styles.formDivider} />
           <CalculatorField
             icon="sparkles-outline"
             iconColor="#A17B42"
-            label="Biological efficiency"
-            description="Expected fresh yield as a share of substrate"
+            label="Growing efficiency"
+            description="How much mushroom yield you expect from this material"
             value={inputs.efficiency}
             onChangeText={(value) => updateInput("efficiency", value)}
             unit="%"
-            accessibilityLabel="Biological efficiency percentage"
+            accessibilityLabel="Growing efficiency percentage"
           />
           <View style={styles.formDivider} />
           <CalculatorField
             icon="pricetag-outline"
             iconColor="#51829A"
-            label="Selling price"
-            description="Your price per kilogram of mushrooms"
+            label="Sale price"
+            description="How much you sell each kilogram for"
             value={inputs.price}
             onChangeText={(value) => updateInput("price", value)}
             unit="K/kg"
-            accessibilityLabel="Selling price per kilogram in kwacha"
+            accessibilityLabel="Sale price per kilogram in kwacha"
           />
           <View style={styles.formDivider} />
           <CalculatorField
             icon="receipt-outline"
             iconColor="#8873A0"
-            label="Total grow costs"
-            description="Substrate, supplies, energy and other costs"
+            label="Total growing costs"
+            description="Growing material, supplies, power, and other costs"
             value={inputs.costs}
             onChangeText={(value) => updateInput("costs", value)}
             unit="K"
@@ -224,27 +224,27 @@ export default function CalculatorScreen() {
               <Ionicons name="analytics-outline" size={16} color="#648256" />
             </View>
             <View>
-              <Text style={styles.summaryTitle}>Profit breakdown</Text>
+              <Text style={styles.summaryTitle}>Money breakdown</Text>
               <Text style={styles.summaryCaption}>
-                Based on the values above
+                Based on your numbers
               </Text>
             </View>
           </View>
           <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Potential revenue</Text>
+            <Text style={styles.summaryLabel}>Possible income</Text>
             <Text style={styles.summaryValue}>
               {formatCurrency(results.revenue)}
             </Text>
           </View>
           <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Growing costs</Text>
+            <Text style={styles.summaryLabel}>Growing cost</Text>
             <Text style={styles.summaryValue}>
               − {formatCurrency(results.costs)}
             </Text>
           </View>
           <View style={styles.summaryDivider} />
           <View style={styles.summaryRow}>
-            <Text style={styles.summaryTotalLabel}>Estimated net profit</Text>
+            <Text style={styles.summaryTotalLabel}>Estimated profit</Text>
             <Text
               style={[
                 styles.summaryTotalValue,
@@ -262,8 +262,8 @@ export default function CalculatorScreen() {
             />
             <Text style={styles.returnText}>
               {results.returnPercent === null
-                ? "Add grow costs to calculate return"
-                : `${formatNumber(results.returnPercent)}% return on costs`}
+                ? "Add your growing costs to see your return"
+                : `${formatNumber(results.returnPercent)}% return from your costs`}
             </Text>
           </View>
         </View>
@@ -275,8 +275,8 @@ export default function CalculatorScreen() {
             color="#889184"
           />
           <Text style={styles.disclaimerText}>
-            Estimates only. Actual yield and earnings vary with growing
-            conditions, harvest quality, and market prices.
+            This is only an estimate. Your actual harvest and income can change
+            based on room conditions, crop quality, and market prices.
           </Text>
         </View>
       </ScrollView>

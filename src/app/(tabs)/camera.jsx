@@ -46,8 +46,8 @@ export default function CameraScreen() {
 
   const showAnalysisStatus = () => {
     Alert.alert(
-      "Analysis coming soon",
-      "Your photo is ready, but mushroom deficiency detection has not been connected yet. No diagnosis has been generated.",
+      "Check coming soon",
+      "Your photo is ready, but this health check is not connected yet. No report has been created.",
     );
   };
 
@@ -65,11 +65,11 @@ export default function CameraScreen() {
         </View>
 
         <View style={styles.heading}>
-          <Text style={styles.eyebrow}>MUSHROOM HEALTH</Text>
-          <Text style={styles.title}>A closer look at your grow.</Text>
+          <Text style={styles.eyebrow}>CROP HEALTH</Text>
+          <Text style={styles.title}>A quick check on your crop.</Text>
           <Text style={styles.subtitle}>
-            Capture a mushroom photo to check for visual signs of stress or
-            nutrient deficiency.
+            Take a photo of your mushrooms to look for signs of stress or
+            missing nutrients.
           </Text>
         </View>
 
@@ -81,12 +81,12 @@ export default function CameraScreen() {
               </View>
               <View>
                 <Text style={styles.scanCardTitle}>
-                  {selectedImage ? "Photo ready" : "Start a new scan"}
+                  {selectedImage ? "Photo ready" : "Start a new check"}
                 </Text>
                 <Text style={styles.scanCardCaption}>
                   {selectedImage
-                    ? "Review your photo before continuing"
-                    : "Oyster mushrooms · Fruiting stage"}
+                    ? "Look over your photo before continuing"
+                    : "Mushroom crop · ready to check"}
                 </Text>
               </View>
             </View>
@@ -118,9 +118,9 @@ export default function CameraScreen() {
                   <Ionicons name="leaf" size={48} color="#E6EBD8" />
                   <View style={styles.mushroomBase} />
                 </View>
-                <Text style={styles.previewTitle}>Your mushroom in focus</Text>
+                <Text style={styles.previewTitle}>Your crop in focus</Text>
                 <Text style={styles.previewDescription}>
-                  Add a photo to prepare your health check
+                  Add a photo to start a quick check
                 </Text>
                 <View style={styles.frameCornerTopLeft} />
                 <View style={styles.frameCornerTopRight} />
@@ -175,7 +175,7 @@ export default function CameraScreen() {
               style={[styles.uploadButton, isPickingImage && styles.disabled]}
             >
               <Ionicons name="images-outline" size={19} color="#3D6B4A" />
-              <Text style={styles.uploadButtonText}>Upload</Text>
+              <Text style={styles.uploadButtonText}>Choose a photo</Text>
             </TouchableOpacity>
           </View>
 
@@ -187,7 +187,7 @@ export default function CameraScreen() {
               style={styles.analyzeButton}
             >
               <Ionicons name="sparkles-outline" size={18} color="#FFFFFF" />
-              <Text style={styles.analyzeButtonText}>Analyze photo</Text>
+              <Text style={styles.analyzeButtonText}>Check this photo</Text>
               <Ionicons name="arrow-forward" size={17} color="#D8E7C5" />
             </TouchableOpacity>
           ) : null}
@@ -195,7 +195,7 @@ export default function CameraScreen() {
           <View style={styles.privacyNote}>
             <Ionicons name="lock-closed-outline" size={13} color="#758475" />
             <Text style={styles.privacyText}>
-              Your photo stays on this device until analysis is available.
+              Your photo stays on this device until the check feature is ready.
             </Text>
           </View>
         </View>
@@ -205,9 +205,9 @@ export default function CameraScreen() {
             <Ionicons name="sunny-outline" size={17} color="#9B7742" />
           </View>
           <View>
-            <Text style={styles.tipsTitle}>Get the clearest check</Text>
+            <Text style={styles.tipsTitle}>Get the best photo</Text>
             <Text style={styles.tipsCaption}>
-              A good photo makes visual signs easier to see
+              A clear photo makes it easier to spot problems
             </Text>
           </View>
         </View>
@@ -223,16 +223,16 @@ export default function CameraScreen() {
           <View style={styles.tipDivider} />
           <TipRow
             icon="scan-outline"
-            title="Fill the frame"
-            description="Focus on the cap and stem, with the surface in view."
+            title="Get the whole mushroom in view"
+            description="Make sure the cap and stem are clear and easy to see."
             color="#5A7890"
             background="#EAF0F2"
           />
           <View style={styles.tipDivider} />
           <TipRow
             icon="images-outline"
-            title="Choose a healthy angle"
-            description="Keep the mushroom sharp and avoid crowded shots."
+            title="Take it from a straight angle"
+            description="Keep the crop sharp and avoid clutter in the photo."
             color="#5F8057"
             background="#EDF2E8"
           />
@@ -245,8 +245,8 @@ export default function CameraScreen() {
             color="#71816C"
           />
           <Text style={styles.disclaimerText}>
-            Visual symptoms can have many causes. A photo check is a guide, not
-            a substitute for expert advice.
+            Photos can show signs of stress, but many things can cause them.
+            This check is only a guide, not a diagnosis.
           </Text>
         </View>
       </ScrollView>
