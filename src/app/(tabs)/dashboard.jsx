@@ -104,10 +104,6 @@ export default function DashboardScreen() {
             <View style={styles.roomIcon}>
               <Ionicons name="home-outline" size={15} color="#477052" />
             </View>
-            <View>
-              <Text style={styles.roomLabel}>GROW SPACE</Text>
-              <Text style={styles.roomName}>Room 1</Text>
-            </View>
           </View>
         </View>
 
@@ -168,7 +164,7 @@ export default function DashboardScreen() {
           <View>
             <Text style={styles.sectionTitle}>Room conditions</Text>
             <Text style={styles.sectionCaption}>
-              Live readings · updates every few seconds
+              Live readings from room sensors
             </Text>
           </View>
           <View style={styles.sectionAction}>
@@ -197,9 +193,7 @@ export default function DashboardScreen() {
                 </View>
                 <View style={styles.metricCopy}>
                   <Text style={styles.metricLabel}>{metric.label}</Text>
-                  <Text style={styles.metricTarget}>
-                  Goal: {metric.target}
-                  </Text>
+                  <Text style={styles.metricTarget}>Goal: {metric.target}</Text>
                 </View>
                 <View style={styles.metricReading}>
                   <View style={styles.valueRow}>
@@ -239,9 +233,6 @@ export default function DashboardScreen() {
           <View>
             <Text style={styles.sectionTitle}>Room tools</Text>
             <Text style={styles.sectionCaption}>Quick controls</Text>
-          </View>
-          <View style={styles.equipmentCount}>
-            <Text style={styles.equipmentCountText}>02</Text>
           </View>
         </View>
 
