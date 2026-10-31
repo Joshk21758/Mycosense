@@ -108,6 +108,20 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
+          name="camera"
+          options={{
+            title: "Scan",
+            tabBarIcon: ({ color, focused }) => (
+              <AnimatedTabIcon
+                color={color}
+                focused={focused}
+                activeName="scan"
+                inactiveName="scan-outline"
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="settings"
           options={{
             title: "Settings",

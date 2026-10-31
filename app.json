@@ -56,7 +56,14 @@
         }
       ],
       "expo-audio",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Allow MycoSense to take photos of your mushrooms.",
+          "photosPermission": "Allow MycoSense to choose photos of your mushrooms."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

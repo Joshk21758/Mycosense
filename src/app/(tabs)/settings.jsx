@@ -15,6 +15,22 @@ export default function SettingsScreen() {
   const [targetHumidity, setTargetHumidity] = useState("90");
   const [targetTemp, setTargetTemp] = useState("24");
   const [autoControl, setAutoControl] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const updateHumidity = (value) => {
+    setTargetHumidity(value);
+    setIsSaved(false);
+  };
+
+  const updateTemperature = (value) => {
+    setTargetTemp(value);
+    setIsSaved(false);
+  };
+
+  const updateAutoControl = (value) => {
+    setAutoControl(value);
+    setIsSaved(false);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -23,84 +39,141 @@ export default function SettingsScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.pageHeading}>
-          <Text style={styles.pageTitle}>Chamber settings</Text>
-          <Text style={styles.pageSubtitle}>
-            Fine-tune your settings for better analysis.
-          </Text>
+        <View style={styles.topBar}>
+          <View style={styles.topIcon}>
+            <Ionicons name="options-outline" size={18} color="#477052" />
+          </View>
+          <View style={styles.topCopy}>
+            <Text style={styles.topEyebrow}>PERSONALIZE YOUR GROW</Text>
+            <Text style={styles.topTitle}>Settings</Text>
+          </View>
+          <View style={styles.roomBadge}>
+            <Ionicons name="home-outline" size={13} color="#63775D" />
+            <Text style={styles.roomBadgeText}>ROOM 01</Text>
+          </View>
+        </View>
+
+        <View style={styles.introCard}>
+          <View style={styles.introCopy}>
+            <Text style={styles.introEyebrow}>YOUR GROW SPACE</Text>
+            <Text style={styles.introTitle}>A comfortable climate starts here.</Text>
+            <Text style={styles.introDescription}>
+              Set the targets you want to keep an eye on.
+            </Text>
+          </View>
+          <View style={styles.introIcon}>
+            <Ionicons name="leaf-outline" size={25} color="#DCE8CA" />
+          </View>
+          <View style={styles.introOrb} />
         </View>
 
         <View style={styles.sectionHeading}>
-          <View style={styles.sectionIcon}>
-            <Ionicons name="sparkles-outline" size={17} color="#648256" />
+          <View style={styles.sectionNumber}>
+            <Text style={styles.sectionNumberText}>01</Text>
           </View>
           <View>
             <Text style={styles.sectionTitle}>Automation</Text>
             <Text style={styles.sectionCaption}>
-              Let your chamber make small adjustments
+              Choose how you prefer to manage the chamber
             </Text>
           </View>
         </View>
+
         <View style={styles.automationCard}>
-          <View style={styles.automationCopy}>
-            <Text style={styles.cardTitle}>Automatic control</Text>
-            <Text style={styles.cardDescription}>
-              Keep your environment close to its target conditions.
-            </Text>
+          <View style={styles.automationTop}>
             <View
-              style={[styles.modePill, !autoControl && styles.modePillPaused]}
+              style={[
+                styles.automationIcon,
+                !autoControl && styles.automationIconPaused,
+              ]}
             >
+              <Ionicons
+                name="flash-outline"
+                size={18}
+                color={autoControl ? "#4F7955" : "#82877D"}
+              />
+            </View>
+            <View style={styles.automationStatus}>
               <View
-                style={[styles.modeDot, !autoControl && styles.modeDotPaused]}
+                style={[
+                  styles.automationDot,
+                  !autoControl && styles.automationDotPaused,
+                ]}
               />
               <Text
-                style={[styles.modeText, !autoControl && styles.modeTextPaused]}
+                style={[
+                  styles.automationStatusText,
+                  !autoControl && styles.automationStatusTextPaused,
+                ]}
               >
-                {autoControl ? "AUTOMATION ON" : "MANUAL CONTROL"}
+                {autoControl ? "PREFERENCE ON" : "PAUSED"}
               </Text>
             </View>
           </View>
-          <Switch
-            accessibilityLabel="Enable automatic control"
-            value={autoControl}
-            onValueChange={setAutoControl}
-            trackColor={{ false: "#D9DED5", true: "#A8C19D" }}
-            thumbColor={autoControl ? "#3F704C" : "#FFFFFF"}
-            ios_backgroundColor="#D9DED5"
-          />
+          <View style={styles.automationBody}>
+            <View style={styles.automationCopy}>
+              <Text style={styles.cardTitle}>Automatic control</Text>
+              <Text style={styles.cardDescription}>
+                Keep your environment close to its target conditions.
+              </Text>
+            </View>
+            <Switch
+              accessibilityLabel="Enable automatic control preference"
+              value={autoControl}
+              onValueChange={updateAutoControl}
+              trackColor={{ false: "#D9DED5", true: "#A8C19D" }}
+              thumbColor={autoControl ? "#3F704C" : "#FFFFFF"}
+              ios_backgroundColor="#D9DED5"
+            />
+          </View>
+          <View style={styles.automationDivider} />
+          <View style={styles.automationFoot}>
+            <Ionicons
+              name="information-circle-outline"
+              size={14}
+              color="#889184"
+            />
+            <Text style={styles.automationFootText}>
+              This preference is not connected to chamber hardware yet.
+            </Text>
+          </View>
         </View>
 
         <View style={styles.sectionHeading}>
-          <View style={[styles.sectionIcon, styles.sectionIconBlue]}>
-            <Ionicons name="options-outline" size={17} color="#51829A" />
+          <View style={[styles.sectionNumber, styles.sectionNumberBlue]}>
+            <Text style={[styles.sectionNumberText, styles.sectionNumberBlueText]}>
+              02
+            </Text>
           </View>
           <View>
             <Text style={styles.sectionTitle}>Target conditions</Text>
             <Text style={styles.sectionCaption}>
-              Set the range for your room
+              Set a reference for your room
             </Text>
           </View>
         </View>
-        <View style={styles.formCard}>
+
+        <View style={styles.targetCards}>
           <SettingInput
             icon="water-outline"
             iconColor="#51829A"
             label="Relative humidity"
             description="A comfortable level for moisture"
             value={targetHumidity}
-            onChangeText={setTargetHumidity}
+            onChangeText={updateHumidity}
             unit="%"
+            range="Typical target · 85–95%"
             accessibilityLabel="Target relative humidity"
           />
-          <View style={styles.formDivider} />
           <SettingInput
             icon="thermometer-outline"
             iconColor="#B7654F"
             label="Temperature"
             description="Keep the room moderate and steady"
             value={targetTemp}
-            onChangeText={setTargetTemp}
+            onChangeText={updateTemperature}
             unit="°C"
+            range="Typical target · 22–25°C"
             accessibilityLabel="Target temperature"
           />
         </View>
@@ -108,12 +181,34 @@ export default function SettingsScreen() {
         <TouchableOpacity
           accessibilityRole="button"
           activeOpacity={0.85}
-          style={styles.saveButton}
+          onPress={() => setIsSaved(true)}
+          style={[styles.saveButton, isSaved && styles.saveButtonSaved]}
         >
-          <Ionicons name="checkmark-circle-outline" size={19} color="#FFFFFF" />
-          <Text style={styles.saveButtonText}>Save settings</Text>
-          <Ionicons name="arrow-forward" size={17}  color="#D8E7C5" />
+          <View style={styles.saveIcon}>
+            <Ionicons
+              name={isSaved ? "checkmark" : "checkmark-circle-outline"}
+              size={18}
+              color="#FFFFFF"
+            />
+          </View>
+          <Text style={styles.saveButtonText}>
+            {isSaved ? "Saved for this session" : "Save preferences"}
+          </Text>
+          {!isSaved ? (
+            <Ionicons name="arrow-forward" size={17} color="#D8E7C5" />
+          ) : null}
         </TouchableOpacity>
+        <View style={styles.note}>
+          <Ionicons
+            name="information-circle-outline"
+            size={15}
+            color="#7C8879"
+          />
+          <Text style={styles.noteText}>
+            Preferences are kept for this session only. Chamber hardware sync
+            isn’t connected.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -127,35 +222,40 @@ function SettingInput({
   value,
   onChangeText,
   unit,
+  range,
   accessibilityLabel,
 }) {
   return (
-    <View style={styles.settingInputRow}>
-      <View
-        style={[
-          styles.settingInputIcon,
-          iconColor === "#51829A"
-            ? styles.settingInputIconBlue
-            : styles.settingInputIconWarm,
-        ]}
-      >
-        <Ionicons name={icon} size={18} color={iconColor} />
+    <View style={styles.targetCard}>
+      <View style={styles.targetCardTop}>
+        <View
+          style={[
+            styles.settingInputIcon,
+            iconColor === "#51829A"
+              ? styles.settingInputIconBlue
+              : styles.settingInputIconWarm,
+          ]}
+        >
+          <Ionicons name={icon} size={19} color={iconColor} />
+        </View>
+        <View style={styles.numberInputWrap}>
+          <TextInput
+            accessibilityLabel={accessibilityLabel}
+            style={styles.numberInput}
+            value={value}
+            onChangeText={onChangeText}
+            keyboardType="numeric"
+            returnKeyType="done"
+            selectTextOnFocus
+          />
+          <Text style={styles.unitText}>{unit}</Text>
+        </View>
       </View>
-      <View style={styles.settingInputCopy}>
-        <Text style={styles.fieldLabel}>{label}</Text>
-        <Text style={styles.fieldDescription}>{description}</Text>
-      </View>
-      <View style={styles.numberInputWrap}>
-        <TextInput
-          accessibilityLabel={accessibilityLabel}
-          style={styles.numberInput}
-          value={value}
-          onChangeText={onChangeText}
-          keyboardType="numeric"
-          returnKeyType="done"
-          selectTextOnFocus
-        />
-        <Text style={styles.unitText}>{unit}</Text>
+      <Text style={styles.fieldLabel}>{label}</Text>
+      <Text style={styles.fieldDescription}>{description}</Text>
+      <View style={styles.rangePill}>
+        <Ionicons name="leaf-outline" size={12} color="#72866B" />
+        <Text style={styles.rangeText}>{range}</Text>
       </View>
     </View>
   );
@@ -164,8 +264,7 @@ function SettingInput({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F7F7F2",
-    paddingTop: 10,
+    backgroundColor: "#F5F6F1",
   },
   content: {
     paddingHorizontal: 20,
@@ -175,179 +274,249 @@ const styles = StyleSheet.create({
   topBar: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 26,
+    marginBottom: 17,
   },
-  brandLockup: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  brandMark: {
-    width: 32,
-    height: 32,
-    borderRadius: 11,
-    backgroundColor: "#2F6044",
+  topIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 13,
+    backgroundColor: "#E8F0E7",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 8,
+    marginRight: 10,
   },
-  brandName: {
-    color: "#283A2E",
-    fontSize: 17,
-    fontWeight: "700",
+  topCopy: {
+    flex: 1,
+  },
+  topEyebrow: {
+    color: "#7D8D75",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 1.1,
+    marginBottom: 3,
+  },
+  topTitle: {
+    color: "#29392E",
+    fontSize: 19,
+    fontFamily: "Pliant-Bold",
     letterSpacing: -0.5,
   },
-  chamberBadge: {
+  roomBadge: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 7,
-    borderRadius: 20,
     backgroundColor: "#E9EEE5",
+    paddingHorizontal: 9,
+    paddingVertical: 7,
+    borderRadius: 11,
   },
-  chamberBadgeText: {
+  roomBadgeText: {
     color: "#64755F",
-    fontSize: 9,
-    fontWeight: "700",
-    letterSpacing: 0.8,
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 0.6,
     marginLeft: 5,
   },
-  pageHeading: {
-    marginBottom: 25,
+  introCard: {
+    overflow: "hidden",
+    position: "relative",
+    flexDirection: "row",
+    backgroundColor: "#315F42",
+    borderRadius: 21,
+    padding: 16,
+    marginBottom: 21,
   },
-  eyebrow: {
-    color: "#798A71",
-    fontSize: 10,
-    fontWeight: "700",
-    letterSpacing: 1.3,
-    marginBottom: 7,
+  introCopy: {
+    flex: 1,
+    paddingRight: 5,
   },
-  pageTitle: {
-    color: "#26382C",
-    fontSize: 21,
+  introEyebrow: {
+    color: "#D1DFCE",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 0.9,
+    marginBottom: 6,
+  },
+  introTitle: {
+    maxWidth: 240,
+    color: "#FFFFFF",
+    fontSize: 16,
+    lineHeight: 20,
     fontFamily: "Pliant-Bold",
-    letterSpacing: -1,
+    letterSpacing: -0.3,
   },
-  pageSubtitle: {
-    color: "#778275",
-    fontSize: 12,
+  introDescription: {
+    color: "#D2DFD1",
+    fontSize: 9,
+    lineHeight: 14,
     fontFamily: "Pliant-Regular",
-    marginTop: 6,
+    marginTop: 5,
+  },
+  introIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 14,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  introOrb: {
+    position: "absolute",
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    right: -66,
+    bottom: -72,
+    backgroundColor: "rgba(255,255,255,0.05)",
   },
   sectionHeading: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
-    marginTop: 5,
+    marginBottom: 10,
   },
-  sectionIcon: {
-    width: 35,
-    height: 35,
-    borderRadius: 12,
-    backgroundColor: "#EDF3E9",
+  sectionNumber: {
+    width: 32,
+    height: 32,
+    borderRadius: 11,
+    backgroundColor: "#E8F0E7",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
+    marginRight: 9,
   },
-  sectionIconBlue: {
+  sectionNumberBlue: {
     backgroundColor: "#EAF2F4",
   },
-  sectionIconGold: {
-    backgroundColor: "#F5F0E4",
+  sectionNumberText: {
+    color: "#648256",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+  },
+  sectionNumberBlueText: {
+    color: "#51829A",
   },
   sectionTitle: {
     color: "#304034",
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: "Pliant-Bold",
   },
   sectionCaption: {
     color: "#899286",
-    fontSize: 10,
+    fontSize: 9,
     fontFamily: "Pliant-Regular",
     marginTop: 3,
   },
   automationCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: "#E9EBE4",
+    padding: 13,
+    marginBottom: 21,
+  },
+  automationTop: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#ECEDE6",
-    padding: 16,
-    marginBottom: 21,
+    marginBottom: 10,
+  },
+  automationIcon: {
+    width: 33,
+    height: 33,
+    borderRadius: 11,
+    backgroundColor: "#EAF1E7",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  automationIconPaused: {
+    backgroundColor: "#F1F0EC",
+  },
+  automationStatus: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    borderRadius: 9,
+    backgroundColor: "#EDF3E9",
+  },
+  automationDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: "#69915B",
+    marginRight: 5,
+  },
+  automationDotPaused: {
+    backgroundColor: "#97998F",
+  },
+  automationStatusText: {
+    color: "#5F7955",
+    fontSize: 7,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 0.6,
+  },
+  automationStatusTextPaused: {
+    color: "#777A72",
+  },
+  automationBody: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   automationCopy: {
     flex: 1,
-    paddingRight: 12,
+    paddingRight: 10,
   },
   cardTitle: {
     color: "#334237",
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: "GoogleSans-SemiBold",
-    lineHeight: 13,
-    marginBottom: 5,
+    marginBottom: 4,
   },
   cardDescription: {
     color: "#899286",
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 9,
+    lineHeight: 14,
     fontFamily: "Pliant-Regular",
-    maxWidth: 235,
   },
-  modePill: {
+  automationDivider: {
+    height: 1,
+    backgroundColor: "#EEF0EA",
+    marginVertical: 11,
+  },
+  automationFoot: {
     flexDirection: "row",
     alignItems: "center",
-    alignSelf: "flex-start",
-    backgroundColor: "#EDF3E9",
-    borderRadius: 10,
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    marginTop: 10,
   },
-  modePillPaused: {
-    backgroundColor: "#F1F0EC",
-  },
-  modeDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    marginTop: -4,
-    backgroundColor: "#69915B",
-    marginRight: 6,
-  },
-  modeDotPaused: {
-    backgroundColor: "#97998F",
-  },
-  modeText: {
-    color: "#5F7955",
+  automationFootText: {
+    color: "#7F8A7E",
     fontSize: 8,
-    fontFamily: "GoogleSans-SemiBold",
-    letterSpacing: 0.7,
+    fontFamily: "Pliant-Regular",
+    marginLeft: 5,
   },
-  modeTextPaused: {
-    color: "#777A72",
+  targetCards: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 17,
   },
-  formCard: {
+  targetCard: {
+    width: "48.5%",
     backgroundColor: "#FFFFFF",
-    borderRadius: 19,
+    borderRadius: 17,
     borderWidth: 1,
-    borderColor: "#ECEDE6",
-    paddingHorizontal: 14,
-    marginBottom: 21,
+    borderColor: "#E9EBE4",
+    padding: 12,
   },
-  settingInputRow: {
-    minHeight: 82,
+  targetCardTop: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 13,
   },
   settingInputIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: 13,
+    width: 34,
+    height: 34,
+    borderRadius: 11,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
   },
   settingInputIconBlue: {
     backgroundColor: "#EAF2F4",
@@ -355,110 +524,101 @@ const styles = StyleSheet.create({
   settingInputIconWarm: {
     backgroundColor: "#F8EDE8",
   },
-  settingInputCopy: {
-    flex: 1,
-    paddingRight: 5,
-  },
-  fieldLabel: {
-    color: "#666666",
-    fontSize: 11,
-    fontFamily: "Pliant-Bold",
-    marginBottom: 4,
-  },
-  fieldDescription: {
-    color: "#929A8F",
-    fontSize: 9,
-    fontFamily: "Pliant-Regular",
-    lineHeight: 13,
-  },
   numberInputWrap: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    minWidth: 73,
-    height: 40,
+    minWidth: 59,
+    height: 34,
     backgroundColor: "#F7F8F4",
     borderWidth: 1,
     borderColor: "#ECEFE8",
-    borderRadius: 12,
-    paddingHorizontal: 7,
+    borderRadius: 10,
+    paddingHorizontal: 5,
   },
   numberInput: {
-    minWidth: 33,
+    minWidth: 26,
+    maxWidth: 37,
     color: "#344638",
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: "Pliant-Bold",
     textAlign: "right",
     paddingVertical: 0,
-    paddingHorizontal: 2,
+    paddingHorizontal: 1,
   },
   unitText: {
     color: "#818A7F",
-    fontSize: 11,
+    fontSize: 9,
     fontFamily: "Pliant-Regular",
-    marginLeft: 3,
+    marginLeft: 2,
   },
-  formDivider: {
-    height: 1,
-    backgroundColor: "#EEF0EA",
-    marginLeft: 48,
+  fieldLabel: {
+    color: "#334237",
+    fontSize: 10,
+    fontFamily: "GoogleSans-SemiBold",
+    marginBottom: 4,
   },
-  connectionCard: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 19,
-    borderWidth: 1,
-    borderColor: "#ECEDE6",
-    padding: 15,
-    marginBottom: 19,
-  },
-  addressInput: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#F7F8F4",
-    borderWidth: 1,
-    borderColor: "#ECEFE8",
-    borderRadius: 12,
-    marginTop: 8,
-    paddingHorizontal: 11,
-  },
-  textInput: {
-    flex: 1,
-    color: "#656765",
-    fontSize: 12,
-    fontFamily: "Pliant-Regular",
-    paddingVertical: 12,
-    paddingHorizontal: 9,
-  },
-  inputHint: {
+  fieldDescription: {
     color: "#929A8F",
     fontSize: 8,
     fontFamily: "Pliant-Regular",
-    lineHeight: 15,
-    marginTop: 8,
+    lineHeight: 12,
+    minHeight: 24,
   },
-  saveButton: {
-    minHeight: 52,
+  rangePill: {
+    alignSelf: "flex-start",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    backgroundColor: "#EDF3E9",
+    borderRadius: 9,
+    paddingHorizontal: 6,
+    paddingVertical: 5,
+    marginTop: 10,
+  },
+  rangeText: {
+    color: "#64795E",
+    fontSize: 7,
+    fontFamily: "GoogleSans-SemiBold",
+    marginLeft: 4,
+  },
+  saveButton: {
+    minHeight: 49,
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#2F6044",
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    marginTop: 1,
+    borderRadius: 15,
+    paddingHorizontal: 14,
+    marginBottom: 11,
+  },
+  saveButtonSaved: {
+    backgroundColor: "#476C4B",
+  },
+  saveIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 9,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 9,
   },
   saveButtonText: {
     flex: 1,
     color: "#FFFFFF",
-    fontSize: 12,
-    fontFamily: "Pliant-Bold",
-    marginLeft: 10,
+    fontSize: 11,
+    fontFamily: "GoogleSans-SemiBold",
   },
-  footerText: {
-    color: "#9BA394",
-    fontSize: 9,
+  note: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    paddingHorizontal: 2,
+  },
+  noteText: {
+    flex: 1,
+    color: "#7C8879",
+    fontSize: 8,
+    lineHeight: 13,
     fontFamily: "Pliant-Regular",
-    letterSpacing: 1.15,
-    textAlign: "center",
-    marginTop: 19,
+    marginLeft: 6,
   },
 });

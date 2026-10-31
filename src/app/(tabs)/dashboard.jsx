@@ -19,9 +19,11 @@ const metrics = [
     icon: "thermometer-outline",
     tint: "#B7654F",
     iconBackground: "#F8EDE8",
-    value: (telemetry) => `${telemetry.temperature}°`,
-    unit: "C",
-    target: "Ideal 22–25°C",
+    value: (telemetry) => telemetry.temperature.toFixed(1),
+    unit: "°C",
+    target: "22–25°C",
+    isInRange: (telemetry) =>
+      telemetry.temperature >= 22 && telemetry.temperature <= 25,
   },
   {
     key: "humidity",
@@ -29,8 +31,11 @@ const metrics = [
     icon: "water-outline",
     tint: "#51829A",
     iconBackground: "#EAF2F4",
-    value: (telemetry) => `${telemetry.humidity}%`,
-    target: "Ideal 85–95%",
+    value: (telemetry) => `${telemetry.humidity}`,
+    unit: "%",
+    target: "85–95%",
+    isInRange: (telemetry) =>
+      telemetry.humidity >= 85 && telemetry.humidity <= 95,
   },
   {
     key: "co2",
@@ -40,7 +45,8 @@ const metrics = [
     iconBackground: "#F0EDF5",
     value: (telemetry) => `${telemetry.co2}`,
     unit: "ppm",
-    target: "Ideal below 800 ppm",
+    target: "Below 800 ppm",
+    isInRange: (telemetry) => telemetry.co2 < 800,
   },
   {
     key: "moisture",
@@ -48,21 +54,17 @@ const metrics = [
     icon: "leaf-outline",
     tint: "#628353",
     iconBackground: "#EDF2E9",
-    value: (telemetry) => `${telemetry.moisture}%`,
-    target: "Ideal 65–75%",
+    value: (telemetry) => `${telemetry.moisture}`,
+    unit: "%",
+    target: "65–75%",
+    isInRange: (telemetry) =>
+      telemetry.moisture >= 65 && telemetry.moisture <= 75,
   },
 ];
 
 export default function DashboardScreen() {
   const [telemetry, setTelemetry] = useState(initialSensorData);
-  const isBalanced =
-    telemetry.temperature >= 22 &&
-    telemetry.temperature <= 25 &&
-    telemetry.humidity >= 85 &&
-    telemetry.humidity <= 95 &&
-    telemetry.co2 < 800 &&
-    telemetry.moisture >= 65 &&
-    telemetry.moisture <= 75;
+  const isBalanced = metrics.every((metric) => metric.isInRange(telemetry));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -94,102 +96,157 @@ export default function DashboardScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.topBar}>
-          <View style={styles.chamberBadge}>
-            <Ionicons name="home-outline" size={14} color="#60775B" />
-            <Text style={styles.chamberBadgeText}>ROOM 1</Text>
+          <View>
+            <Text style={styles.brandEyebrow}>MYCOSENSE</Text>
+            <Text style={styles.brandTitle}>Grow overview</Text>
+          </View>
+          <View style={styles.roomBadge}>
+            <View style={styles.roomIcon}>
+              <Ionicons name="home-outline" size={15} color="#477052" />
+            </View>
+            <View>
+              <Text style={styles.roomLabel}>GROW ROOM</Text>
+              <Text style={styles.roomName}>Room 01</Text>
+            </View>
           </View>
         </View>
 
-        <View style={styles.pageHeading}>
-          <Text style={styles.eyebrow}>YOUR GROW SPACE</Text>
-          <Text style={styles.pageTitle}>Monitor your conditions</Text>
-          <Text style={styles.pageSubtitle}>
-            Oyster mushroom <Text style={styles.subtitleDot}>·</Text> Fruiting
-            phase
+        <View style={[styles.statusCard, !isBalanced && styles.statusCardAlert]}>
+          <View style={styles.statusTop}>
+            <View style={styles.statusIcon}>
+              <Ionicons
+                name={isBalanced ? "leaf" : "alert-circle"}
+                size={20}
+                color="#E5EDDA"
+              />
+            </View>
+            <View
+              style={[styles.sampleBadge, !isBalanced && styles.sampleBadgeAlert]}
+            >
+              <View
+                style={[styles.sampleDot, !isBalanced && styles.sampleDotAlert]}
+              />
+              <Text
+                style={[
+                  styles.sampleText,
+                  !isBalanced && styles.sampleTextAlert,
+                ]}
+              >
+                SAMPLE
+              </Text>
+            </View>
+          </View>
+          <Text style={styles.statusEyebrow}>CHAMBER STATUS</Text>
+          <Text style={styles.statusTitle}>
+            {isBalanced ? "Looking good." : "Needs a little attention."}
           </Text>
-        </View>
-
-        <View style={styles.statusCard}>
-          <View style={styles.statusIcon}>
-            <Ionicons name="leaf" size={21} color="#D8E7C5" />
-          </View>
-          <View style={styles.statusCopy}>
-            <Text style={styles.statusTitle}>
-              {isBalanced
-                ? "Your chamber is in balance"
-                : "Room conditions need attention"}
-            </Text>
-            <Text style={styles.statusDescription}>
-              {isBalanced
-                ? "Conditions are within their target ranges."
-                : "Some readings are outside their target range."}
+          <Text style={styles.statusDescription}>
+            {isBalanced
+              ? "Your readings are within their target ranges."
+              : "One or more readings are outside their target ranges."}
+          </Text>
+          <View style={styles.statusFooter}>
+            <Ionicons
+              name="leaf-outline"
+              size={14}
+              color="rgba(241,246,232,0.8)"
+            />
+            <Text style={styles.statusFooterText}>
+              Oyster mushrooms <Text style={styles.statusSeparator}>·</Text>{" "}
+              Fruiting phase
             </Text>
           </View>
-          <View style={styles.liveTag}>
-            <View style={styles.liveDot} />
-            <Text style={styles.liveText}>LIVE</Text>
-          </View>
+          <View style={styles.statusOrb} />
         </View>
 
         <View style={styles.sectionHeader}>
           <View>
             <Text style={styles.sectionTitle}>Room conditions</Text>
+            <Text style={styles.sectionCaption}>
+              Sample readings · updates every few seconds
+            </Text>
           </View>
-          <View style={styles.updatedIcon}>
-            <Ionicons name="pulse-outline" size={18} color="#5C7B5D" />
+          <View style={styles.sectionAction}>
+            <Ionicons name="pulse-outline" size={17} color="#55795A" />
           </View>
         </View>
 
-        <View style={styles.metricGrid}>
-          {metrics.map((metric) => (
-            <View key={metric.key} style={styles.metricCard}>
-              <View style={styles.metricTop}>
+        <View style={styles.metricList}>
+          {metrics.map((metric, index) => {
+            const inRange = metric.isInRange(telemetry);
+            return (
+              <View
+                key={metric.key}
+                style={[
+                  styles.metricCard,
+                  index === 0 && styles.metricCardFirst,
+                ]}
+              >
                 <View
                   style={[
                     styles.metricIcon,
                     { backgroundColor: metric.iconBackground },
                   ]}
                 >
-                  <Ionicons name={metric.icon} size={18} color={metric.tint} />
+                  <Ionicons name={metric.icon} size={19} color={metric.tint} />
                 </View>
-                <Ionicons
-                  name="ellipsis-horizontal"
-                  size={17}
-                  color="#B1B8AC"
-                />
+                <View style={styles.metricCopy}>
+                  <Text style={styles.metricLabel}>{metric.label}</Text>
+                  <Text style={styles.metricTarget}>
+                    Target {metric.target}
+                  </Text>
+                </View>
+                <View style={styles.metricReading}>
+                  <View style={styles.valueRow}>
+                    <Text style={styles.metricValue}>
+                      {metric.value(telemetry)}
+                    </Text>
+                    <Text style={styles.metricUnit}>{metric.unit}</Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.rangeBadge,
+                      !inRange && styles.rangeBadgeAlert,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        styles.rangeDot,
+                        !inRange && styles.rangeDotAlert,
+                      ]}
+                    />
+                    <Text
+                      style={[
+                        styles.rangeText,
+                        !inRange && styles.rangeTextAlert,
+                      ]}
+                    >
+                      {inRange ? "In range" : "Check"}
+                    </Text>
+                  </View>
+                </View>
               </View>
-              <Text style={styles.metricLabel}>{metric.label}</Text>
-              <View style={styles.valueRow}>
-                <Text style={styles.metricValue}>
-                  {metric.value(telemetry)}
-                </Text>
-                {metric.unit ? (
-                  <Text style={styles.metricUnit}>{metric.unit}</Text>
-                ) : null}
-              </View>
-              <View style={styles.targetRow}>
-                <View style={styles.targetDot} />
-                <Text style={styles.metricTarget}>{metric.target}</Text>
-              </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
 
         <View style={styles.sectionHeader}>
           <View>
             <Text style={styles.sectionTitle}>Equipment</Text>
-            <Text style={styles.sectionCaption}>Manage chamber devices</Text>
+            <Text style={styles.sectionCaption}>
+              Device controls preview
+            </Text>
           </View>
-          <Ionicons name="options-outline" size={19} color="#788675" />
+          <View style={styles.equipmentCount}>
+            <Text style={styles.equipmentCountText}>02</Text>
+          </View>
         </View>
 
         <View style={styles.equipmentCard}>
           <ActuatorRow
             icon="sync-outline"
             title="Fresh air fan"
-            description={
-              telemetry.fanStatus ? "Running · Automatic" : "Standby"
-            }
+            description={telemetry.fanStatus ? "On · Automatic" : "Off"}
             color="#4F8060"
             iconBackground="#EDF3E9"
             value={telemetry.fanStatus}
@@ -199,14 +256,24 @@ export default function DashboardScreen() {
           <ActuatorRow
             icon="water-outline"
             title="Ultrasonic humidifier"
-            description={telemetry.humidifierStatus ? "Running" : "Standby"}
+            description={telemetry.humidifierStatus ? "On" : "Off"}
             color="#51829A"
             iconBackground="#EAF2F4"
             value={telemetry.humidifierStatus}
             onValueChange={(value) => toggleActuator("humidifierStatus", value)}
           />
         </View>
-        <Text style={styles.bottomNote}>SMALL ADJUSTMENTS, HAPPIER GROWTH</Text>
+        <View style={styles.previewNote}>
+          <Ionicons
+            name="information-circle-outline"
+            size={15}
+            color="#7C8879"
+          />
+          <Text style={styles.previewNoteText}>
+            Sample readings and switch states are a preview, not connected to
+            chamber hardware.
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -231,6 +298,7 @@ function ActuatorRow({
         <Text style={styles.actuatorDescription}>{description}</Text>
       </View>
       <Switch
+        accessibilityLabel={`Toggle ${title}`}
         value={value}
         onValueChange={onValueChange}
         trackColor={{ false: "#D9DED5", true: "#A8C19D" }}
@@ -244,7 +312,7 @@ function ActuatorRow({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F7F7F2",
+    backgroundColor: "#F5F6F1",
   },
   content: {
     paddingHorizontal: 20,
@@ -255,234 +323,293 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 26,
+    marginBottom: 17,
   },
-  brandLockup: {
-    flexDirection: "row",
-    alignItems: "center",
+  brandEyebrow: {
+    color: "#7D8D75",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 1.4,
+    marginBottom: 4,
   },
-  brandMark: {
-    width: 32,
-    height: 32,
-    borderRadius: 11,
-    backgroundColor: "#2F6044",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 8,
-  },
-  brandName: {
-    color: "#283A2E",
-    fontSize: 16,
+  brandTitle: {
+    color: "#29392E",
+    fontSize: 21,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.5,
   },
-  chamberBadge: {
+  roomBadge: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 9,
     paddingVertical: 7,
-    borderRadius: 20,
+    borderRadius: 13,
     backgroundColor: "#E9EEE5",
   },
-  chamberBadgeText: {
-    color: "#64755F",
-    fontSize: 9,
-    fontFamily: "Pliant-Regular",
-    letterSpacing: 0.8,
-    marginLeft: 5,
-  },
-  pageHeading: {
-    marginBottom: 19,
-  },
-  eyebrow: {
-    color: "#798A71",
-    fontSize: 10,
-    fontFamily: "GoogleSans-SemiBold",
-    letterSpacing: 1.3,
-    marginBottom: 7,
-  },
-  pageTitle: {
-    color: "#26382C",
-    fontSize: 20,
-    fontFamily: "Pliant-Bold",
-    letterSpacing: -1,
-  },
-  pageSubtitle: {
-    color: "#778275",
-    fontSize: 13,
-    fontFamily: "Pliant-Regular",
-    marginTop: 6,
-  },
-  subtitleDot: {
-    color: "#99A494",
-  },
-  statusCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#2F6044",
-    borderRadius: 19,
-    paddingHorizontal: 14,
-    paddingVertical: 15,
-    marginBottom: 25,
-  },
-  statusIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 14,
-    backgroundColor: "rgba(255,255,255,0.12)",
+  roomIcon: {
+    width: 29,
+    height: 29,
+    borderRadius: 10,
+    backgroundColor: "#F7F8F3",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 11,
+    marginRight: 7,
   },
-  statusCopy: {
-    flex: 1,
-    paddingRight: 5,
-  },
-  statusTitle: {
-    color: "#F7F7F2",
-    fontSize: 12,
-    fontFamily: "Pliant-Bold",
-    marginBottom: 4,
-  },
-  statusDescription: {
-    color: "#D4E1D2",
-    fontSize: 10,
-    fontFamily: "Pliant-Regular",
-    lineHeight: 14,
-  },
-  liveTag: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.12)",
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 10,
-  },
-  liveDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: "#D8E7C5",
-    marginRight: 5,
-  },
-  liveText: {
-    color: "#F1F4E9",
-    fontSize: 9,
-    fontFamily: "Pliant-Regular",
+  roomLabel: {
+    color: "#84917D",
+    fontSize: 7,
+    fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.7,
+    marginBottom: 2,
   },
-  sectionHeader: {
+  roomName: {
+    color: "#425744",
+    fontSize: 10,
+    fontFamily: "GoogleSans-SemiBold",
+  },
+  statusCard: {
+    overflow: "hidden",
+    position: "relative",
+    backgroundColor: "#315F42",
+    borderRadius: 22,
+    padding: 17,
+    marginBottom: 22,
+  },
+  statusCardAlert: {
+    backgroundColor: "#74533B",
+  },
+  statusTop: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 13,
   },
+  statusIcon: {
+    width: 37,
+    height: 37,
+    borderRadius: 13,
+    backgroundColor: "rgba(255,255,255,0.13)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sampleBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.13)",
+    borderRadius: 10,
+    paddingHorizontal: 9,
+    paddingVertical: 6,
+  },
+  sampleBadgeAlert: {
+    backgroundColor: "rgba(255,255,255,0.14)",
+  },
+  sampleDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#D9E7C5",
+    marginRight: 6,
+  },
+  sampleDotAlert: {
+    backgroundColor: "#F3D0A2",
+  },
+  sampleText: {
+    color: "#F0F3E9",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 0.9,
+  },
+  sampleTextAlert: {
+    color: "#FFF1DC",
+  },
+  statusEyebrow: {
+    color: "#CEDDC9",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 1.1,
+    marginBottom: 5,
+  },
+  statusTitle: {
+    color: "#FFFFFF",
+    fontSize: 19,
+    fontFamily: "Pliant-Bold",
+    letterSpacing: -0.4,
+    marginBottom: 4,
+  },
+  statusDescription: {
+    color: "#D3E0D0",
+    fontSize: 10,
+    lineHeight: 15,
+    fontFamily: "Pliant-Regular",
+  },
+  statusFooter: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255,255,255,0.15)",
+    marginTop: 14,
+    paddingTop: 11,
+  },
+  statusFooterText: {
+    color: "#E0E9D9",
+    fontSize: 9,
+    fontFamily: "Pliant-Regular",
+    marginLeft: 6,
+  },
+  statusSeparator: {
+    color: "#ACC2A5",
+  },
+  statusOrb: {
+    position: "absolute",
+    right: -72,
+    top: 55,
+    width: 170,
+    height: 170,
+    borderRadius: 85,
+    backgroundColor: "rgba(255,255,255,0.035)",
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 11,
+  },
   sectionTitle: {
     color: "#2D3C31",
     fontSize: 14,
-    marginLeft: 10,
     fontFamily: "Pliant-Bold",
-    letterSpacing: -0.3,
+    letterSpacing: -0.2,
   },
   sectionCaption: {
     color: "#899286",
-    fontSize: 11,
-    marginLeft: 10,
+    fontSize: 9,
     fontFamily: "Pliant-Regular",
-    marginTop: 4,
+    marginTop: 3,
   },
-  updatedIcon: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
-    backgroundColor: "#E9EEE5",
+  sectionAction: {
+    width: 33,
+    height: 33,
+    borderRadius: 11,
+    backgroundColor: "#E7EEE4",
     alignItems: "center",
     justifyContent: "center",
   },
-  metricGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    marginBottom: 11,
+  metricList: {
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#E9EBE4",
+    borderRadius: 18,
+    paddingHorizontal: 12,
+    marginBottom: 21,
   },
   metricCard: {
-    width: "48.3%",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: "#ECEDE6",
-    padding: 14,
-    marginBottom: 11,
-  },
-  metricTop: {
+    minHeight: 76,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 12,
+    borderTopWidth: 1,
+    borderTopColor: "#EEF0EA",
+  },
+  metricCardFirst: {
+    borderTopWidth: 0,
   },
   metricIcon: {
-    width: 34,
-    height: 34,
+    width: 37,
+    height: 37,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
+    marginRight: 10,
+  },
+  metricCopy: {
+    flex: 1,
   },
   metricLabel: {
-    color: "#060606",
+    color: "#334237",
     fontSize: 11,
-    fontFamily: "Pliant-Regular",
+    fontFamily: "GoogleSans-SemiBold",
     marginBottom: 4,
+  },
+  metricTarget: {
+    color: "#929A8F",
+    fontSize: 9,
+    fontFamily: "Pliant-Regular",
+  },
+  metricReading: {
+    minWidth: 72,
+    alignItems: "flex-end",
   },
   valueRow: {
     flexDirection: "row",
     alignItems: "baseline",
-    marginBottom: 8,
+    marginBottom: 3,
   },
   metricValue: {
     color: "#293A2F",
-    fontSize: 23,
+    fontSize: 17,
     fontFamily: "Pliant-Bold",
-    letterSpacing: -0.9,
+    letterSpacing: -0.4,
   },
   metricUnit: {
     color: "#778275",
-    fontSize: 11,
+    fontSize: 9,
     fontFamily: "Pliant-Regular",
-    marginLeft: 4,
+    marginLeft: 3,
   },
-  targetRow: {
+  rangeBadge: {
     flexDirection: "row",
     alignItems: "center",
   },
-  targetDot: {
+  rangeBadgeAlert: {
+    opacity: 0.95,
+  },
+  rangeDot: {
     width: 5,
     height: 5,
     borderRadius: 3,
     backgroundColor: "#82A477",
-    marginRight: 5,
+    marginRight: 4,
   },
-  metricTarget: {
-    color: "#899286",
+  rangeDotAlert: {
+    backgroundColor: "#C17B4E",
+  },
+  rangeText: {
+    color: "#71866B",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+  },
+  rangeTextAlert: {
+    color: "#A96742",
+  },
+  equipmentCount: {
+    width: 32,
+    height: 32,
+    borderRadius: 11,
+    backgroundColor: "#E9EEE5",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  equipmentCountText: {
+    color: "#6A7C63",
     fontSize: 9,
-    fontFamily: "Pliant-Regular",
+    fontFamily: "GoogleSans-SemiBold",
   },
   equipmentCard: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 19,
+    borderRadius: 18,
     borderWidth: 1,
-    borderColor: "#ECEDE6",
+    borderColor: "#E9EBE4",
     paddingHorizontal: 13,
-    marginBottom: 18,
+    marginBottom: 11,
   },
   actuatorRow: {
-    minHeight: 70,
+    minHeight: 68,
     flexDirection: "row",
     alignItems: "center",
   },
   actuatorIcon: {
-    width: 38,
-    height: 38,
-    borderRadius: 13,
+    width: 36,
+    height: 36,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 10,
@@ -492,26 +619,32 @@ const styles = StyleSheet.create({
   },
   actuatorTitle: {
     color: "#334237",
-    fontSize: 12,
-    fontFamily: "Pliant-Regular",
+    fontSize: 11,
+    fontFamily: "GoogleSans-SemiBold",
     marginBottom: 4,
   },
   actuatorDescription: {
     color: "#899286",
-    fontSize: 10,
+    fontSize: 9,
     fontFamily: "Pliant-Regular",
   },
   divider: {
     height: 1,
     backgroundColor: "#EEF0EA",
-    marginLeft: 48,
+    marginLeft: 46,
   },
-  bottomNote: {
-    color: "#9BA394",
+  previewNote: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    paddingHorizontal: 2,
+    marginBottom: 5,
+  },
+  previewNoteText: {
+    flex: 1,
+    color: "#7C8879",
     fontSize: 9,
+    lineHeight: 14,
     fontFamily: "Pliant-Regular",
-    letterSpacing: 1.15,
-    textAlign: "center",
-    marginTop: 2,
+    marginLeft: 6,
   },
 });

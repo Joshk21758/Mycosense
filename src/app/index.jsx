@@ -10,21 +10,27 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const features = [
+const highlights = [
   {
-    icon: "thermometer-outline",
-    title: "Climate in balance",
-    description: "Keep temperature and humidity in their ideal ranges.",
+    icon: "pulse-outline",
+    title: "Know your conditions",
+    description: "See your grow-room climate at a glance.",
+    color: "#447858",
+    background: "#E8F0E7",
   },
   {
-    icon: "analytics-outline",
-    title: "A clearer picture",
-    description: "See the conditions in your grow room at a glance.",
+    icon: "calculator-outline",
+    title: "Plan your harvest",
+    description: "Estimate yield, revenue, and growing costs.",
+    color: "#A47C3D",
+    background: "#F5EFE2",
   },
   {
-    icon: "leaf-outline",
-    title: "Thoughtful automation",
-    description: "Let your chamber respond when conditions change.",
+    icon: "scan-outline",
+    title: "Check mushroom health",
+    description: "Capture photos and keep an eye on your crop.",
+    color: "#557C91",
+    background: "#E9F0F2",
   },
 ];
 
@@ -37,74 +43,99 @@ export default function LandingScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.brandRow}>
-          <View style={styles.brandMark}>
-            <Ionicons name="leaf" size={20} color="#F8F7F1" />
+        <View style={styles.topBar}>
+          <View style={styles.brandLockup}>
+            <View style={styles.brandMark}>
+              <Ionicons name="leaf" size={18} color="#F8F7F1" />
+            </View>
+            <Text style={styles.brandName}>MycoSense</Text>
           </View>
-          <Text style={styles.brandName}>Mycosense</Text>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push("/(auth)/login")}
+            style={styles.signInButton}
+          >
+            <Text style={styles.signInText}>Sign in</Text>
+            <Ionicons name="arrow-forward" size={14} color="#40674B" />
+          </Pressable>
         </View>
 
         <View style={styles.heroCard}>
-          <View style={styles.heroOrbLarge} />
-          <View style={styles.heroOrbSmall} />
-          <View style={styles.heroEyebrow}>
-            <Ionicons name="sunny-outline" size={15} color="#D8E7C5" />
-            <Text style={styles.heroEyebrowText}>
-              YOUR HARVEST IS IN GOOD HANDS
-            </Text>
+          <View style={styles.heroGlow} />
+          <View style={styles.heroTopline}>
+            <View style={styles.heroBadge}>
+              <View style={styles.heroBadgeDot} />
+              <Text style={styles.heroBadgeText}>GROW WITH CONFIDENCE</Text>
+            </View>
+            <View style={styles.heroLeaf}>
+              <Ionicons name="leaf-outline" size={25} color="#DCE8CA" />
+            </View>
           </View>
           <Text style={styles.heroTitle}>
-            A healthier{"\n"}home for your{"\n"}
-            <Text style={styles.heroTitleAccent}>harvest.</Text>
+            Better grows{"\n"}start with{"\n"}
+            <Text style={styles.heroAccent}>a little insight.</Text>
           </Text>
           <Text style={styles.heroDescription}>
-            A convinient way to care for your growing environment. See what your
-            room needs, all in one place.
+            Your mushroom grow, made easier to understand. Keep track of your
+            conditions and plan what comes next.
           </Text>
           <TouchableOpacity
             accessibilityRole="button"
-            style={styles.primaryButton}
             activeOpacity={0.85}
+            style={styles.primaryButton}
             onPress={() => router.push("/(tabs)/dashboard")}
           >
-            <Text style={styles.primaryButtonText}>Dashboard</Text>
+            <Text style={styles.primaryButtonText}>Explore your grow</Text>
             <View style={styles.buttonIcon}>
               <Ionicons name="arrow-forward" size={17} color="#244B36" />
             </View>
           </TouchableOpacity>
-          <View style={styles.heroFootnote}>
-            <Ionicons name="leaf-outline" size={15} color="#D8E7C5" />
-            <Text style={styles.heroFootnoteText}>
-              Better conditions. More room to grow.
+          <View style={styles.heroNote}>
+            <Ionicons
+              name="checkmark-circle-outline"
+              size={15}
+              color="#DCE8CA"
+            />
+            <Text style={styles.heroNoteText}>
+              Your grow space, all in one place
             </Text>
           </View>
         </View>
 
         <View style={styles.sectionHeading}>
-          <Text style={styles.sectionEyebrow}>MADE FOR HEALTHIER GROWTH</Text>
-          <Text style={styles.sectionTitle}>Everything in its element.</Text>
+          <View>
+            <Text style={styles.sectionEyebrow}>MADE FOR YOUR GROW</Text>
+            <Text style={styles.sectionTitle}>Everything you need to grow.</Text>
+          </View>
+          <View style={styles.sectionMark}>
+            <Ionicons name="sparkles-outline" size={17} color="#65845A" />
+          </View>
         </View>
 
         <View style={styles.featureList}>
-          {features.map((feature, index) => (
+          {highlights.map((feature, index) => (
             <View key={feature.title} style={styles.featureCard}>
               <View
                 style={[
+                  styles.featureNumber,
+                  index === 1 && styles.featureNumberGold,
+                  index === 2 && styles.featureNumberBlue,
+                ]}
+              >
+                <Text style={styles.featureNumberText}>
+                  {String(index + 1).padStart(2, "0")}
+                </Text>
+              </View>
+              <View
+                style={[
                   styles.featureIcon,
-                  index === 1 && styles.featureIconBlue,
-                  index === 2 && styles.featureIconGold,
+                  { backgroundColor: feature.background },
                 ]}
               >
                 <Ionicons
                   name={feature.icon}
-                  size={21}
-                  color={
-                    index === 1
-                      ? "#51829A"
-                      : index === 2
-                        ? "#A07936"
-                        : "#477454"
-                  }
+                  size={19}
+                  color={feature.color}
                 />
               </View>
               <View style={styles.featureCopy}>
@@ -113,14 +144,18 @@ export default function LandingScreen() {
                   {feature.description}
                 </Text>
               </View>
+              <Ionicons name="chevron-forward" size={16} color="#AAB3A7" />
             </View>
           ))}
         </View>
+
         <View style={styles.footer}>
-          <Text style={styles.footerDescription}>
-            GROW BETTER & HEALTHIER HARVEST
-          </Text>
-          <View style={styles.footerDivider} />
+          <View style={styles.footerBrand}>
+            <View style={styles.footerMark}>
+              <Ionicons name="leaf" size={13} color="#F8F7F1" />
+            </View>
+            <Text style={styles.footerBrandText}>A little more room to grow.</Text>
+          </View>
           <View style={styles.footerLinks}>
             <Pressable
               onPress={() => router.push("/about")}
@@ -128,20 +163,22 @@ export default function LandingScreen() {
             >
               <Text style={styles.footerLink}>About</Text>
             </Pressable>
+            <View style={styles.footerDot} />
             <Pressable
               onPress={() => router.push("/contact")}
               accessibilityRole="button"
             >
-              <Text style={styles.footerLink}>Contact Us</Text>
+              <Text style={styles.footerLink}>Contact</Text>
             </Pressable>
+            <View style={styles.footerDot} />
             <Pressable
               onPress={() => router.push("/(auth)/register")}
               accessibilityRole="button"
             >
-              <Text style={styles.footerLink}>Sign Up</Text>
+              <Text style={styles.footerLink}>Create account</Text>
             </Pressable>
           </View>
-          <Text style={styles.footerCopyright}>Mycosense · Beta</Text>
+          <Text style={styles.footerCopyright}>MYCOSENSE · BETA</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -151,126 +188,134 @@ export default function LandingScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F7F7F2",
+    backgroundColor: "#F5F6F1",
   },
   content: {
-    paddingHorizontal: 22,
+    paddingHorizontal: 21,
     paddingTop: 12,
-    paddingBottom: 32,
+    paddingBottom: 28,
   },
-  brandRow: {
+  topBar: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 22,
+    justifyContent: "space-between",
+    marginBottom: 19,
+  },
+  brandLockup: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   brandMark: {
-    width: 36,
-    height: 36,
-    borderRadius: 13,
-    backgroundColor: "#2F6044",
+    width: 35,
+    height: 35,
+    borderRadius: 12,
+    backgroundColor: "#315F42",
     alignItems: "center",
     justifyContent: "center",
     marginRight: 9,
   },
   brandName: {
-    color: "#24362A",
+    color: "#26382C",
     fontSize: 16,
     fontFamily: "Pliant-Bold",
-    letterSpacing: 0.6,
+    letterSpacing: -0.3,
   },
-  brandPill: {
+  signInButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#E9EEE3",
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    marginLeft: "auto",
+    paddingHorizontal: 11,
+    paddingVertical: 8,
+    backgroundColor: "#E8EFE5",
+    borderRadius: 12,
   },
-  brandDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: "#648C55",
+  signInText: {
+    color: "#40674B",
+    fontSize: 11,
+    fontFamily: "GoogleSans-SemiBold",
     marginRight: 6,
-  },
-  brandPillText: {
-    color: "#55704B",
-    fontSize: 9,
-    fontFamily: "Pliant-Regular",
   },
   heroCard: {
     overflow: "hidden",
     position: "relative",
-    backgroundColor: "#28563D",
-    borderRadius: 26,
-    paddingHorizontal: 23,
-    paddingTop: 25,
-    paddingBottom: 20,
-    marginBottom: 30,
+    backgroundColor: "#284F39",
+    borderRadius: 25,
+    padding: 21,
+    marginBottom: 27,
   },
-  heroOrbLarge: {
+  heroGlow: {
     position: "absolute",
-    width: 230,
-    height: 230,
-    borderRadius: 115,
-    backgroundColor: "rgba(255,255,255,0.045)",
+    width: 245,
+    height: 245,
     right: -100,
-    top: 50,
+    top: 38,
+    borderRadius: 123,
+    backgroundColor: "rgba(255,255,255,0.055)",
   },
-  heroOrbSmall: {
-    position: "absolute",
-    width: 130,
-    height: 130,
-    borderRadius: 65,
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.1)",
-    right: -26,
-    top: 88,
-  },
-  heroEyebrow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  heroEyebrowText: {
-    color: "#D8E7C5",
-    fontSize: 10,
-    fontFamily: "GoogleSans-SemiBold",
-    marginTop: 5,
-    letterSpacing: 1.15,
-    marginLeft: 3,
-  },
-  heroTitle: {
-    color: "#FAF9F3",
-    fontSize: 30,
-    lineHeight: 40,
-    fontFamily: "Pliant-Bold",
-    letterSpacing: -1.5,
-    marginBottom: 13,
-  },
-  heroTitleAccent: {
-    color: "#72c307",
-  },
-  heroDescription: {
-    color: "#D1DFD1",
-    fontSize: 13,
-    fontFamily: "Pliant-Regular",
-    lineHeight: 15,
-    marginBottom: 21,
-  },
-  primaryButton: {
+  heroTopline: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    alignSelf: "flex-start",
-    minHeight: 50,
-    backgroundColor: "#F7F7F2",
-    borderRadius: 16,
-    paddingTop: 4,
-    paddingLeft: 17,
-    paddingRight: 7,
     marginBottom: 19,
+  },
+  heroBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderRadius: 12,
+    paddingHorizontal: 9,
+    paddingVertical: 7,
+  },
+  heroBadgeDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#D3E5A7",
+    marginRight: 7,
+  },
+  heroBadgeText: {
+    color: "#E0E9D4",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+    letterSpacing: 0.8,
+  },
+  heroLeaf: {
+    width: 38,
+    height: 38,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 14,
+    backgroundColor: "rgba(255,255,255,0.1)",
+  },
+  heroTitle: {
+    color: "#FAF9F3",
+    fontSize: 31,
+    lineHeight: 38,
+    fontFamily: "Pliant-Bold",
+    letterSpacing: -1.1,
+    marginBottom: 10,
+  },
+  heroAccent: {
+    color: "#D5E6A7",
+  },
+  heroDescription: {
+    maxWidth: 305,
+    color: "#D4DED1",
+    fontSize: 12,
+    fontFamily: "Pliant-Regular",
+    lineHeight: 18,
+    marginBottom: 17,
+  },
+  primaryButton: {
+    minHeight: 49,
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#F6F7F0",
+    borderRadius: 15,
+    paddingLeft: 15,
+    paddingRight: 6,
+    marginBottom: 15,
   },
   primaryButtonText: {
     color: "#294B35",
@@ -281,123 +326,151 @@ const styles = StyleSheet.create({
   buttonIcon: {
     width: 36,
     height: 36,
-    marginTop: -4,
     borderRadius: 12,
-    backgroundColor: "#daf2c3",
+    backgroundColor: "#E1EBD3",
     alignItems: "center",
     justifyContent: "center",
   },
-  heroFootnote: {
+  heroNote: {
     flexDirection: "row",
     alignItems: "center",
   },
-  heroFootnoteText: {
-    color: "#D1DFD1",
-    fontSize: 11,
+  heroNoteText: {
+    color: "#D2DFCE",
+    fontSize: 10,
     fontFamily: "Pliant-Regular",
-    marginLeft: 7,
+    marginLeft: 6,
   },
   sectionHeading: {
-    marginBottom: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 13,
   },
   sectionEyebrow: {
-    color: "#75856F",
+    color: "#7A8B72",
     fontSize: 9,
     fontFamily: "GoogleSans-SemiBold",
-    letterSpacing: 1.2,
+    letterSpacing: 1.1,
+    marginBottom: 5,
   },
   sectionTitle: {
-    color: "#27392D",
-    fontSize: 21,
+    color: "#28392E",
+    fontSize: 18,
     fontFamily: "Pliant-Bold",
-    letterSpacing: -0.6,
+    letterSpacing: -0.5,
+  },
+  sectionMark: {
+    width: 33,
+    height: 33,
+    borderRadius: 11,
+    backgroundColor: "#E8EFE5",
+    alignItems: "center",
+    justifyContent: "center",
   },
   featureList: {
-    gap: 10,
+    gap: 9,
   },
   featureCard: {
+    minHeight: 76,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#ECEDE6",
-    borderRadius: 18,
-    paddingVertical: 15,
-    paddingHorizontal: 14,
+    borderColor: "#E9EBE4",
+    borderRadius: 17,
+    paddingHorizontal: 11,
+    paddingVertical: 11,
   },
-  featureIcon: {
-    width: 42,
-    height: 42,
-    borderRadius: 14,
-    backgroundColor: "#EDF3E9",
+  featureNumber: {
+    width: 26,
+    height: 26,
+    borderRadius: 9,
+    backgroundColor: "#E8F0E7",
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 12,
+    marginRight: 8,
   },
-  featureIconBlue: {
-    backgroundColor: "#EBF2F4",
+  featureNumberGold: {
+    backgroundColor: "#F5EFE2",
   },
-  featureIconGold: {
-    backgroundColor: "#F5F0E4",
+  featureNumberBlue: {
+    backgroundColor: "#E9F0F2",
+  },
+  featureNumberText: {
+    color: "#698166",
+    fontSize: 8,
+    fontFamily: "GoogleSans-SemiBold",
+  },
+  featureIcon: {
+    width: 37,
+    height: 37,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
   },
   featureCopy: {
     flex: 1,
-    paddingRight: 8,
+    paddingRight: 5,
   },
   featureTitle: {
     color: "#2D3C31",
-    fontSize: 12,
-    fontFamily: "Pliant-Bold",
+    fontSize: 11,
+    fontFamily: "GoogleSans-SemiBold",
+    marginBottom: 3,
   },
   featureDescription: {
     color: "#7D887D",
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: "Pliant-Regular",
-    lineHeight: 16,
-  },
-  footerText: {
-    color: "#9BA394",
-    fontSize: 9,
-    fontFamily: "Pliant-Regular",
-    letterSpacing: 1.2,
-    textAlign: "center",
-    marginTop: 23,
+    lineHeight: 14,
   },
   footer: {
     alignItems: "center",
-    paddingHorizontal: 22,
-    paddingTop: 28,
-    paddingBottom: 25,
+    paddingTop: 24,
+    paddingBottom: 5,
   },
-  footerDescription: {
-    color: "#75827a",
-    fontFamily: "GoogleSans-SemiBold",
+  footerBrand: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  footerMark: {
+    width: 24,
+    height: 24,
+    borderRadius: 8,
+    backgroundColor: "#315F42",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 7,
+  },
+  footerBrandText: {
+    color: "#536454",
     fontSize: 10,
-    marginTop: 9,
-  },
-  footerDivider: {
-    backgroundColor: "#e2e8e2",
-    height: 1,
-    marginVertical: 18,
-    width: "100%",
+    fontFamily: "GoogleSans-SemiBold",
   },
   footerLinks: {
-    alignItems: "center",
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 22,
-    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
   },
   footerLink: {
-    color: "#385343",
+    color: "#55705B",
     fontFamily: "GoogleSans-SemiBold",
-    fontSize: 11,
+    fontSize: 10,
+  },
+  footerDot: {
+    width: 3,
+    height: 3,
+    borderRadius: 2,
+    backgroundColor: "#AAB4A7",
   },
   footerCopyright: {
-    color: "#98a39c",
+    color: "#98A39C",
     fontFamily: "GoogleSans-Regular",
-    fontSize: 9,
-    letterSpacing: 1.8,
-    marginTop: 18,
+    fontSize: 8,
+    letterSpacing: 1.3,
+    marginTop: 14,
   },
 });
