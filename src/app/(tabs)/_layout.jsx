@@ -94,6 +94,20 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
+          name="calculator"
+          options={{
+            title: "Calculator",
+            tabBarIcon: ({ color, focused }) => (
+              <AnimatedTabIcon
+                color={color}
+                focused={focused}
+                activeName="calculator"
+                inactiveName="calculator-outline"
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="settings"
           options={{
             title: "Settings",
