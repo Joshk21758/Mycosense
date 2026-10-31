@@ -86,7 +86,7 @@ export default function SettingsScreen() {
             icon="water-outline"
             iconColor="#51829A"
             label="Relative humidity"
-            description="A comfortable level for fruiting"
+            description="A comfortable level for moisture"
             value={targetHumidity}
             onChangeText={setTargetHumidity}
             unit="%"
@@ -97,7 +97,7 @@ export default function SettingsScreen() {
             icon="thermometer-outline"
             iconColor="#B7654F"
             label="Temperature"
-            description="Keep the room nice and steady"
+            description="Keep the room moderate and steady"
             value={targetTemp}
             onChangeText={setTargetTemp}
             unit="°C"
@@ -112,7 +112,7 @@ export default function SettingsScreen() {
         >
           <Ionicons name="checkmark-circle-outline" size={19} color="#FFFFFF" />
           <Text style={styles.saveButtonText}>Save settings</Text>
-          <Ionicons name="arrow-forward" size={17} color="#D8E7C5" />
+          <Ionicons name="arrow-forward" size={17}  color="#D8E7C5" />
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

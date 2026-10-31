@@ -117,7 +117,7 @@ export default function DashboardScreen() {
             <Text style={styles.statusTitle}>
               {isBalanced
                 ? "Your chamber is in balance"
-                : "Conditions need a look"}
+                : "Room conditions need attention"}
             </Text>
             <Text style={styles.statusDescription}>
               {isBalanced
