@@ -50,14 +50,6 @@ export default function LandingScreen() {
             </View>
             <Text style={styles.brandName}>MycoSense</Text>
           </View>
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => router.push("/(auth)/login")}
-            style={styles.signInButton}
-          >
-            <Text style={styles.signInText}>Sign in</Text>
-            <Ionicons name="arrow-forward" size={14} color="#40674B" />
-          </Pressable>
         </View>
 
         <View style={styles.heroCard}>
@@ -72,7 +64,7 @@ export default function LandingScreen() {
             </View>
           </View>
           <Text style={styles.heroTitle}>
-            Better grows{"\n"}start with{"\n"}
+            Better growth{"\n"}start with{"\n"}
             <Text style={styles.heroAccent}>a little insight.</Text>
           </Text>
           <Text style={styles.heroDescription}>
@@ -85,7 +77,7 @@ export default function LandingScreen() {
             style={styles.primaryButton}
             onPress={() => router.push("/(tabs)/dashboard")}
           >
-            <Text style={styles.primaryButtonText}>Explore your grow</Text>
+            <Text style={styles.primaryButtonText}>View dashboard</Text>
             <View style={styles.buttonIcon}>
               <Ionicons name="arrow-forward" size={17} color="#244B36" />
             </View>
@@ -105,7 +97,9 @@ export default function LandingScreen() {
         <View style={styles.sectionHeading}>
           <View>
             <Text style={styles.sectionEyebrow}>MADE FOR YOUR GROW</Text>
-            <Text style={styles.sectionTitle}>Everything you need to grow.</Text>
+            <Text style={styles.sectionTitle}>
+              Everything you need to grow.
+            </Text>
           </View>
           <View style={styles.sectionMark}>
             <Ionicons name="sparkles-outline" size={17} color="#65845A" />
@@ -132,11 +126,7 @@ export default function LandingScreen() {
                   { backgroundColor: feature.background },
                 ]}
               >
-                <Ionicons
-                  name={feature.icon}
-                  size={19}
-                  color={feature.color}
-                />
+                <Ionicons name={feature.icon} size={19} color={feature.color} />
               </View>
               <View style={styles.featureCopy}>
                 <Text style={styles.featureTitle}>{feature.title}</Text>
@@ -154,7 +144,9 @@ export default function LandingScreen() {
             <View style={styles.footerMark}>
               <Ionicons name="leaf" size={13} color="#F8F7F1" />
             </View>
-            <Text style={styles.footerBrandText}>A little more room to grow.</Text>
+            <Text style={styles.footerBrandText}>
+              A little more room to grow.
+            </Text>
           </View>
           <View style={styles.footerLinks}>
             <Pressable

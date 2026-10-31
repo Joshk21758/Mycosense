@@ -56,7 +56,9 @@ export default function SettingsScreen() {
         <View style={styles.introCard}>
           <View style={styles.introCopy}>
             <Text style={styles.introEyebrow}>YOUR GROW SPACE</Text>
-            <Text style={styles.introTitle}>A comfortable climate starts here.</Text>
+            <Text style={styles.introTitle}>
+              A comfortable climate starts here.
+            </Text>
             <Text style={styles.introDescription}>
               Set the targets you want to keep an eye on.
             </Text>
@@ -141,7 +143,9 @@ export default function SettingsScreen() {
 
         <View style={styles.sectionHeading}>
           <View style={[styles.sectionNumber, styles.sectionNumberBlue]}>
-            <Text style={[styles.sectionNumberText, styles.sectionNumberBlueText]}>
+            <Text
+              style={[styles.sectionNumberText, styles.sectionNumberBlueText]}
+            >
               02
             </Text>
           </View>
