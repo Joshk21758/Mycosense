@@ -62,10 +62,6 @@ export default function CameraScreen() {
             <Ionicons name="leaf" size={17} color="#F1F4E9" />
           </View>
           <Text style={styles.brandName}>MycoSense</Text>
-          <View style={styles.comingSoonBadge}>
-            <View style={styles.badgeDot} />
-            <Text style={styles.badgeText}>VISION BETA</Text>
-          </View>
         </View>
 
         <View style={styles.heading}>
@@ -122,7 +118,7 @@ export default function CameraScreen() {
                   <Ionicons name="leaf" size={48} color="#E6EBD8" />
                   <View style={styles.mushroomBase} />
                 </View>
-                <Text style={styles.previewTitle}>Your mushroom, in focus</Text>
+                <Text style={styles.previewTitle}>Your mushroom in focus</Text>
                 <Text style={styles.previewDescription}>
                   Add a photo to prepare your health check
                 </Text>

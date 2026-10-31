@@ -98,7 +98,7 @@ export default function DashboardScreen() {
         <View style={styles.topBar}>
           <View>
             <Text style={styles.brandEyebrow}>MYCOSENSE</Text>
-            <Text style={styles.brandTitle}>Grow overview</Text>
+            <Text style={styles.brandTitle}>Overview</Text>
           </View>
           <View style={styles.roomBadge}>
             <View style={styles.roomIcon}>
@@ -111,7 +111,9 @@ export default function DashboardScreen() {
           </View>
         </View>
 
-        <View style={[styles.statusCard, !isBalanced && styles.statusCardAlert]}>
+        <View
+          style={[styles.statusCard, !isBalanced && styles.statusCardAlert]}
+        >
           <View style={styles.statusTop}>
             <View style={styles.statusIcon}>
               <Ionicons
@@ -121,7 +123,10 @@ export default function DashboardScreen() {
               />
             </View>
             <View
-              style={[styles.sampleBadge, !isBalanced && styles.sampleBadgeAlert]}
+              style={[
+                styles.sampleBadge,
+                !isBalanced && styles.sampleBadgeAlert,
+              ]}
             >
               <View
                 style={[styles.sampleDot, !isBalanced && styles.sampleDotAlert]}
@@ -233,9 +238,7 @@ export default function DashboardScreen() {
         <View style={styles.sectionHeader}>
           <View>
             <Text style={styles.sectionTitle}>Equipment</Text>
-            <Text style={styles.sectionCaption}>
-              Device controls preview
-            </Text>
+            <Text style={styles.sectionCaption}>Device controls preview</Text>
           </View>
           <View style={styles.equipmentCount}>
             <Text style={styles.equipmentCountText}>02</Text>

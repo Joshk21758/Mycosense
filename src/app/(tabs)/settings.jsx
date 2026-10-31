@@ -47,10 +47,6 @@ export default function SettingsScreen() {
             <Text style={styles.topEyebrow}>PERSONALIZE YOUR GROW</Text>
             <Text style={styles.topTitle}>Settings</Text>
           </View>
-          <View style={styles.roomBadge}>
-            <Ionicons name="home-outline" size={13} color="#63775D" />
-            <Text style={styles.roomBadgeText}>ROOM 01</Text>
-          </View>
         </View>
 
         <View style={styles.introCard}>
