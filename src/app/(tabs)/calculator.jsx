@@ -34,7 +34,7 @@ function formatCurrency(value) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
-  return value < 0 ? `−$${formatted}` : `$${formatted}`;
+  return value < 0 ? `−K${formatted}` : `K${formatted}`;
 }
 
 export default function CalculatorScreen() {
