@@ -62,7 +62,7 @@ export default function LandingScreen() {
             <Text style={styles.heroAccent}>ease and control.</Text>
           </Text>
           <Text style={styles.heroDescription}>
-            We as Myconsense help our mushroom growing farmers make better
+            We as MycoSense help our mushroom growing farmers make better
             decisions and actionable steps to prevent crop loss & damage. With
             the help of environmental sensors to monitor your crops efficiently.
           </Text>
