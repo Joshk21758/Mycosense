@@ -59,7 +59,7 @@ export default function LandingScreen() {
           </Text>
           <Text style={styles.heroDescription}>
             A convinient way to care for your growing environment. See what your
-            chamber needs, all in one place.
+            room needs, all in one place.
           </Text>
           <TouchableOpacity
             accessibilityRole="button"
