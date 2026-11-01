@@ -3,7 +3,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import sampleTelemetry from "../../data/sampleTelemetry.json";
 import {
-  Alert,
   Pressable,
   ScrollView,
   StyleSheet,

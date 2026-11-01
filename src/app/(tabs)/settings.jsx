@@ -215,17 +215,6 @@ function SettingInput({
         >
           <Ionicons name={icon} size={19} color={iconColor} />
         </View>
-        <View style={styles.numberInputWrap}>
-          <TextInput
-            accessibilityLabel={accessibilityLabel}
-            style={styles.numberInput}
-            value={value}
-            onChangeText={onChangeText}
-            keyboardType="numeric"
-            returnKeyType="done"
-            selectTextOnFocus
-          />
-        </View>
       </View>
       <Text style={styles.fieldLabel}>{label}</Text>
       <Text style={styles.fieldDescription}>{description}</Text>
