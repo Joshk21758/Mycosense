@@ -187,22 +187,6 @@ export default function DashboardScreen() {
     previousAlertIds.current = activeAlertIds;
 
     if (newAlerts.length === 0) return;
-
-    const hasEmergency = newAlerts.some(
-      (alert) => alert.severity === "emergency",
-    );
-    Alert.alert(
-      hasEmergency ? "Emergency alert" : "Room condition alert",
-      newAlerts
-        .map(
-          (alert) =>
-            `${alert.title}\n${alert.summary}\nRecommended steps:\n${alert.actions
-              .map((action, index) => `${index + 1}. ${action}`)
-              .join("\n")}`,
-        )
-        .join("\n\n"),
-      [{ text: "Got it" }],
-    );
   }, [alerts]);
 
   const toggleActuator = (key, value) => {
