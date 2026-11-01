@@ -179,7 +179,7 @@ export default function DashboardScreen() {
               temperature,
               humidity,
             }));
-            setTelemetrySource("Live ESP readings");
+            setTelemetrySource("Live Sensor readings");
           }
         } catch (error) {
           console.error("Unable to read ESP telemetry:", error);
@@ -252,12 +252,12 @@ export default function DashboardScreen() {
           </View>
           <Text style={styles.statusEyebrow}>ROOM STATUS</Text>
           <Text style={styles.statusTitle}>
-            {isBalanced ? "Everything looks good." : "Needs a quick check."}
+            {isBalanced
+              ? "Everything looks good."
+              : "Monitor your room conditions and take action."}
           </Text>
           <Text style={styles.statusDescription}>
-            {isBalanced
-              ? "Your room is in a healthy range."
-              : "One or more readings are a bit off."}
+            {isBalanced && "Your room is in a healthy range."}
           </Text>
           <View style={styles.statusFooter}>
             <Ionicons
@@ -266,8 +266,8 @@ export default function DashboardScreen() {
               color="rgba(241,246,232,0.8)"
             />
             <Text style={styles.statusFooterText}>
-              Oyster mushrooms <Text style={styles.statusSeparator}>·</Text>{" "}
-              Fruiting phase
+              Check recommended actions below. 0{" "}
+              <Text style={styles.statusSeparator}></Text>
             </Text>
           </View>
           <View style={styles.statusOrb} />
@@ -331,7 +331,7 @@ export default function DashboardScreen() {
                         !inRange && styles.rangeTextAlert,
                       ]}
                     >
-                      {inRange ? "Healthy" : "Check"}
+                      {inRange ? "Healthy" : "Alert"}
                     </Text>
                   </View>
                 </View>
@@ -541,7 +541,7 @@ const styles = StyleSheet.create({
   },
   brandEyebrow: {
     color: "#7D8D75",
-    fontSize: 10,
+    fontSize: 20,
     fontFamily: "Pliant-Bold",
     letterSpacing: 1.4,
     marginBottom: 4,
@@ -638,7 +638,7 @@ const styles = StyleSheet.create({
   },
   statusEyebrow: {
     color: "#CEDDC9",
-    fontSize: 8,
+    fontSize: 16,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 1.1,
     marginBottom: 5,
@@ -731,7 +731,7 @@ const styles = StyleSheet.create({
   },
   alertCountText: {
     color: "#628353",
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: "GoogleSans-SemiBold",
   },
   alertCountTextEmergency: {
@@ -790,25 +790,26 @@ const styles = StyleSheet.create({
   },
   alertMessage: {
     color: "#7C8879",
-    fontSize: 14,
+    fontSize: 13,
     lineHeight: 14,
-    marginBottom: 6,
+    marginBottom: 13,
     fontFamily: "Pliant-Regular",
   },
   alertActionHeading: {
     color: "#52634F",
-    fontSize: 12,
+    fontSize: 13,
     lineHeight: 14,
+    marginBottom: 20,
     fontFamily: "Pliant-Bold",
     marginTop: 6,
   },
   alertAction: {
     color: "#667263",
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 15,
+    lineHeight: 16,
     fontFamily: "Pliant-Regular",
     marginTop: 2,
-    marginBottom: 7,
+    marginBottom: 25,
   },
   alertDemo: {
     paddingTop: 11,
@@ -816,7 +817,7 @@ const styles = StyleSheet.create({
   },
   alertDemoTitle: {
     color: "#899286",
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: "Pliant-Bold",
     marginBottom: 8,
   },
@@ -866,8 +867,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
   },
   metricIcon: {
-    width: 37,
-    height: 37,
+    width: 40,
+    height: 40,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
@@ -878,12 +879,12 @@ const styles = StyleSheet.create({
   },
   metricLabel: {
     color: "#334237",
-    fontSize: 13,
-    fontFamily: "GoogleSans-SemiBold",
-    marginBottom: 4,
+    fontSize: 14,
+    fontFamily: "Pliant-Bold",
+    marginBottom: 10,
   },
   metricTarget: {
-    color: "#929A8F",
+    color: "#3f423e",
     fontSize: 12,
     fontFamily: "Pliant-Regular",
   },
@@ -927,8 +928,8 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     color: "#71866B",
-    fontSize: 8,
-    fontFamily: "GoogleSans-SemiBold",
+    fontSize: 12,
+    fontFamily: "Pliant-Regular",
   },
   rangeTextAlert: {
     color: "#A96742",
@@ -972,13 +973,13 @@ const styles = StyleSheet.create({
   },
   actuatorTitle: {
     color: "#334237",
-    fontSize: 11,
-    fontFamily: "GoogleSans-SemiBold",
+    fontSize: 12,
+    fontFamily: "Pliant-Bold",
     marginBottom: 4,
   },
   actuatorDescription: {
     color: "#899286",
-    fontSize: 9,
+    fontSize: 12,
     fontFamily: "Pliant-Regular",
   },
   divider: {
@@ -995,8 +996,8 @@ const styles = StyleSheet.create({
   previewNoteText: {
     flex: 1,
     color: "#7C8879",
-    fontSize: 9,
-    lineHeight: 14,
+    fontSize: 14,
+    lineHeight: 16,
     fontFamily: "Pliant-Regular",
     marginLeft: 6,
   },

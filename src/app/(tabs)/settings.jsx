@@ -251,14 +251,14 @@ const styles = StyleSheet.create({
   },
   topEyebrow: {
     color: "#7D8D75",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 1.1,
     marginBottom: 3,
   },
   topTitle: {
     color: "#29392E",
-    fontSize: 19,
+    fontSize: 21,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.5,
   },
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   },
   roomBadgeText: {
     color: "#64755F",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.6,
     marginLeft: 5,
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   },
   introEyebrow: {
     color: "#D1DFCE",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.9,
     marginBottom: 6,
@@ -300,15 +300,15 @@ const styles = StyleSheet.create({
   introTitle: {
     maxWidth: 240,
     color: "#FFFFFF",
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: 18,
+    lineHeight: 23,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.3,
   },
   introDescription: {
     color: "#D2DFD1",
-    fontSize: 9,
-    lineHeight: 14,
+    fontSize: 11,
+    lineHeight: 16,
     fontFamily: "Pliant-Regular",
     marginTop: 5,
   },
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
   },
   sectionNumberText: {
     color: "#648256",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
   },
   sectionNumberBlueText: {
@@ -356,12 +356,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: "#304034",
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: "Pliant-Bold",
   },
   sectionCaption: {
     color: "#899286",
-    fontSize: 9,
+    fontSize: 11,
     fontFamily: "Pliant-Regular",
     marginTop: 3,
   },
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
   },
   automationStatusText: {
     color: "#5F7955",
-    fontSize: 7,
+    fontSize: 9,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.6,
   },
@@ -428,14 +428,14 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: "#334237",
-    fontSize: 11,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
     marginBottom: 4,
   },
   cardDescription: {
     color: "#899286",
-    fontSize: 9,
-    lineHeight: 14,
+    fontSize: 11,
+    lineHeight: 16,
     fontFamily: "Pliant-Regular",
   },
   automationDivider: {
@@ -449,7 +449,7 @@ const styles = StyleSheet.create({
   },
   automationFootText: {
     color: "#7F8A7E",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "Pliant-Regular",
     marginLeft: 5,
   },
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
     minWidth: 26,
     maxWidth: 37,
     color: "#344638",
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: "Pliant-Bold",
     textAlign: "right",
     paddingVertical: 0,
@@ -509,22 +509,22 @@ const styles = StyleSheet.create({
   },
   unitText: {
     color: "#818A7F",
-    fontSize: 9,
+    fontSize: 11,
     fontFamily: "Pliant-Regular",
     marginLeft: 2,
   },
   fieldLabel: {
     color: "#334237",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "GoogleSans-SemiBold",
     marginBottom: 4,
   },
   fieldDescription: {
     color: "#929A8F",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "Pliant-Regular",
-    lineHeight: 12,
-    minHeight: 24,
+    lineHeight: 14,
+    minHeight: 28,
   },
   rangePill: {
     alignSelf: "flex-start",
@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     color: "#64795E",
-    fontSize: 7,
+    fontSize: 9,
     fontFamily: "GoogleSans-SemiBold",
     marginLeft: 4,
   },
@@ -566,7 +566,7 @@ const styles = StyleSheet.create({
   saveButtonText: {
     flex: 1,
     color: "#FFFFFF",
-    fontSize: 11,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
   },
   note: {
@@ -577,8 +577,8 @@ const styles = StyleSheet.create({
   noteText: {
     flex: 1,
     color: "#7C8879",
-    fontSize: 8,
-    lineHeight: 13,
+    fontSize: 10,
+    lineHeight: 15,
     fontFamily: "Pliant-Regular",
     marginLeft: 6,
   },

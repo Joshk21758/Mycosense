@@ -339,23 +339,23 @@ const styles = StyleSheet.create({
   },
   eyebrow: {
     color: "#798A71",
-    fontSize: 9,
+    fontSize: 11,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 1.1,
     marginLeft: 5,
   },
   pageTitle: {
     color: "#26382C",
-    fontSize: 23,
-    lineHeight: 28,
+    fontSize: 25,
+    lineHeight: 31,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.8,
     maxWidth: 310,
   },
   pageSubtitle: {
     color: "#778275",
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 13,
+    lineHeight: 19,
     fontFamily: "Pliant-Regular",
     marginTop: 5,
   },
@@ -374,14 +374,14 @@ const styles = StyleSheet.create({
   },
   resultLabel: {
     color: "#D9E7D1",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.9,
     marginBottom: 5,
   },
   profitValue: {
     color: "#FFFFFF",
-    fontSize: 33,
+    fontSize: 35,
     fontFamily: "Pliant-Bold",
     letterSpacing: -1,
   },
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: "#E5F0DC",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.5,
   },
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
   },
   resultHint: {
     color: "#D2DFD1",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Pliant-Regular",
     marginTop: 3,
   },
@@ -454,14 +454,14 @@ const styles = StyleSheet.create({
   },
   quickResultLabel: {
     color: "#D1DFCE",
-    fontSize: 7,
+    fontSize: 9,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.4,
     marginBottom: 3,
   },
   quickResultValue: {
     color: "#FFFFFF",
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: "GoogleSans-Bold",
   },
   quickResultDivider: {
@@ -498,12 +498,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: "#304034",
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: "Pliant-Bold",
   },
   sectionCaption: {
     color: "#899286",
-    fontSize: 9,
+    fontSize: 11,
     fontFamily: "Pliant-Regular",
     marginTop: 3,
   },
@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
   },
   resetText: {
     color: "#648256",
-    fontSize: 9,
+    fontSize: 11,
     fontFamily: "GoogleSans-SemiBold",
     marginLeft: 4,
   },
@@ -549,14 +549,14 @@ const styles = StyleSheet.create({
   },
   fieldLabel: {
     color: "#334237",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "GoogleSans-SemiBold",
     marginBottom: 3,
   },
   fieldDescription: {
     color: "#899286",
-    fontSize: 8,
-    lineHeight: 12,
+    fontSize: 10,
+    lineHeight: 14,
     fontFamily: "Pliant-Regular",
   },
   inputWrap: {
@@ -575,7 +575,7 @@ const styles = StyleSheet.create({
     minWidth: 30,
     maxWidth: 55,
     color: "#304034",
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: "GoogleSans-SemiBold",
     textAlign: "right",
     paddingVertical: 0,
@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
   },
   unitText: {
     color: "#899286",
-    fontSize: 9,
+    fontSize: 11,
     fontFamily: "GoogleSans-Regular",
     marginLeft: 4,
   },
@@ -616,12 +616,12 @@ const styles = StyleSheet.create({
   },
   summaryTitle: {
     color: "#304034",
-    fontSize: 11,
+    fontSize: 13,
     fontFamily: "Pliant-Bold",
   },
   summaryCaption: {
     color: "#899286",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "Pliant-Regular",
     marginTop: 2,
   },
@@ -633,12 +633,12 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     color: "#778275",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Pliant-Regular",
   },
   summaryValue: {
     color: "#4E5E52",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "GoogleSans-SemiBold",
   },
   summaryDivider: {
@@ -649,12 +649,12 @@ const styles = StyleSheet.create({
   },
   summaryTotalLabel: {
     color: "#304034",
-    fontSize: 11,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
   },
   summaryTotalValue: {
     color: "#315F42",
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "GoogleSans-Bold",
   },
   lossText: {
@@ -672,7 +672,7 @@ const styles = StyleSheet.create({
   },
   returnText: {
     color: "#5F7955",
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     marginLeft: 5,
   },
@@ -684,8 +684,8 @@ const styles = StyleSheet.create({
   disclaimerText: {
     flex: 1,
     color: "#889184",
-    fontSize: 8,
-    lineHeight: 13,
+    fontSize: 10,
+    lineHeight: 15,
     fontFamily: "Pliant-Regular",
     marginLeft: 6,
   },

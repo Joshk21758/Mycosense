@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   },
   heroNoteText: {
     color: "#D2DFCE",
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: "Pliant-Regular",
     marginLeft: 6,
   },
