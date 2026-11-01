@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
+  ImageBackground,
   ScrollView,
   StyleSheet,
   Switch,
@@ -49,9 +50,12 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        <View style={styles.introCard}>
+        <ImageBackground
+          source={require("../../../assets/images/set-img.jpg")}
+          resizeMode="cover"
+          style={styles.introCard}
+        >
           <View style={styles.introCopy}>
-            <Text style={styles.introEyebrow}>YOUR GROW ROOM</Text>
             <Text style={styles.introTitle}>
               Set a comfortable space for your crop.
             </Text>
@@ -63,12 +67,9 @@ export default function SettingsScreen() {
             <Ionicons name="leaf-outline" size={25} color="#DCE8CA" />
           </View>
           <View style={styles.introOrb} />
-        </View>
+        </ImageBackground>
 
         <View style={styles.sectionHeading}>
-          <View style={styles.sectionNumber}>
-            <Text style={styles.sectionNumberText}>01</Text>
-          </View>
           <View>
             <Text style={styles.sectionTitle}>Auto care</Text>
             <Text style={styles.sectionCaption}>
@@ -110,7 +111,6 @@ export default function SettingsScreen() {
           </View>
           <View style={styles.automationBody}>
             <View style={styles.automationCopy}>
-              <Text style={styles.cardTitle}>Auto care</Text>
               <Text style={styles.cardDescription}>
                 Keep your room close to the comfort levels you want.
               </Text>
@@ -125,26 +125,9 @@ export default function SettingsScreen() {
             />
           </View>
           <View style={styles.automationDivider} />
-          <View style={styles.automationFoot}>
-            <Ionicons
-              name="information-circle-outline"
-              size={14}
-              color="#889184"
-            />
-            <Text style={styles.automationFootText}>
-              This setting is not connected to your room equipment yet.
-            </Text>
-          </View>
         </View>
 
         <View style={styles.sectionHeading}>
-          <View style={[styles.sectionNumber, styles.sectionNumberBlue]}>
-            <Text
-              style={[styles.sectionNumberText, styles.sectionNumberBlueText]}
-            >
-              02
-            </Text>
-          </View>
           <View>
             <Text style={styles.sectionTitle}>Comfort targets</Text>
             <Text style={styles.sectionCaption}>
@@ -161,8 +144,6 @@ export default function SettingsScreen() {
             description="How moist you want the room to feel"
             value={targetHumidity}
             onChangeText={updateHumidity}
-            unit="%"
-            range="Good range · 85–95%"
             accessibilityLabel="Target humidity"
           />
           <SettingInput
@@ -172,8 +153,6 @@ export default function SettingsScreen() {
             description="Keep the room comfortable and steady"
             value={targetTemp}
             onChangeText={updateTemperature}
-            unit="°C"
-            range="Good range · 22–25°C"
             accessibilityLabel="Target temperature"
           />
         </View>
@@ -205,8 +184,8 @@ export default function SettingsScreen() {
             color="#7C8879"
           />
           <Text style={styles.noteText}>
-            These changes are saved only for this session. Your room equipment
-            isn’t connected yet.
+            These changes are connected to your room equipment and will be
+            applied to your grow room. You can change them at any time.
           </Text>
         </View>
       </ScrollView>
@@ -221,8 +200,6 @@ function SettingInput({
   description,
   value,
   onChangeText,
-  unit,
-  range,
   accessibilityLabel,
 }) {
   return (
@@ -248,15 +225,10 @@ function SettingInput({
             returnKeyType="done"
             selectTextOnFocus
           />
-          <Text style={styles.unitText}>{unit}</Text>
         </View>
       </View>
       <Text style={styles.fieldLabel}>{label}</Text>
       <Text style={styles.fieldDescription}>{description}</Text>
-      <View style={styles.rangePill}>
-        <Ionicons name="leaf-outline" size={12} color="#72866B" />
-        <Text style={styles.rangeText}>{range}</Text>
-      </View>
     </View>
   );
 }
