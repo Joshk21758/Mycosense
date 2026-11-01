@@ -18,6 +18,9 @@ const initialSensorData = {
   fanStatus: false,
   humidifierStatus: false,
 };
+const telemetryApiUrl = (
+  process.env.EXPO_PUBLIC_API_URL || "http://10.15.251.40:5000"
+).replace(/\/+$/, "");
 
 const metrics = [
   {
@@ -28,9 +31,9 @@ const metrics = [
     iconBackground: "#F8EDE8",
     value: (telemetry) => telemetry.temperature.toFixed(1),
     unit: "°C",
-    target: "20–35°C",
+    target: "18–24°C",
     isInRange: (telemetry) =>
-      telemetry.temperature >= 20 && telemetry.temperature <= 35,
+      telemetry.temperature >= 20 && telemetry.temperature <= 25,
   },
   {
     key: "humidity",
@@ -40,9 +43,9 @@ const metrics = [
     iconBackground: "#EAF2F4",
     value: (telemetry) => `${telemetry.humidity}`,
     unit: "%",
-    target: "40–80%",
+    target: "85–95%",
     isInRange: (telemetry) =>
-      telemetry.humidity >= 40 && telemetry.humidity <= 80,
+      telemetry.humidity >= 85 && telemetry.humidity <= 95,
   },
   {
     key: "co2",
@@ -55,18 +58,6 @@ const metrics = [
     target: "Below 700 ppm",
     isInRange: (telemetry) => telemetry.co2 < 700,
   },
-  {
-    key: "Moisture",
-    label: "Growing base",
-    icon: "leaf-outline",
-    tint: "#628353",
-    iconBackground: "#EDF2E9",
-    value: (telemetry) => `${telemetry.moisture}`,
-    unit: "%",
-    target: "50–75%",
-    isInRange: (telemetry) =>
-      telemetry.moisture >= 50 && telemetry.moisture <= 75,
-  },
 ];
 
 function getTelemetryAlerts(telemetry) {
@@ -75,8 +66,10 @@ function getTelemetryAlerts(telemetry) {
 
     const metricKey = metric.key.toLowerCase();
     const isEmergency =
-      (metricKey === "temperature" && telemetry.temperature > 27.5) ||
-      (metricKey === "humidity" && telemetry.humidity < 85) ||
+      (metricKey === "temperature" && telemetry.temperature > 24) ||
+      (metricKey === "humidity" &&
+        telemetry.humidity < 85 &&
+        telemetry.humidity > 95) ||
       (metricKey === "co2" && telemetry.co2 > 900);
     const reading = `${metric.value(telemetry)} ${metric.unit}`;
     const label = metricKey === "humidity" ? "Humidity" : metric.label;
@@ -126,18 +119,6 @@ function getTelemetryAlerts(telemetry) {
                 "Run a brief fresh-air exchange, then recheck CO₂.",
               ];
         break;
-      case "moisture":
-        actions =
-          telemetry.moisture < 65
-            ? [
-                "Check that the growing-base sensor is positioned correctly.",
-                "Confirm the reading against the substrate condition before adding moisture.",
-              ]
-            : [
-                "Check the growing-base sensor placement and confirm the reading.",
-                "Avoid adding water until the substrate condition has been checked.",
-              ];
-        break;
       default:
         actions = ["Check the sensor and recheck the reading."];
     }
@@ -156,12 +137,65 @@ function getTelemetryAlerts(telemetry) {
 
 export default function DashboardScreen() {
   const [telemetry, setTelemetry] = useState(initialSensorData);
+  const [telemetrySource, setTelemetrySource] = useState(
+    telemetryApiUrl ? "Connecting to ESP on COM3" : "Sample telemetry",
+  );
   const isBalanced = metrics.every((metric) => metric.isInRange(telemetry));
   const alerts = getTelemetryAlerts(telemetry);
+  const [expandedAlertIds, setExpandedAlertIds] = useState(() => new Set());
   const previousAlertIds = useRef(new Set());
   const telemetryIndex = useRef(0);
 
   useEffect(() => {
+    if (telemetryApiUrl) {
+      let isMounted = true;
+
+      const fetchLatestTelemetry = async () => {
+        try {
+          const response = await fetch(
+            `${telemetryApiUrl}/api/telemetry/latest`,
+          );
+          if (response.status === 404) {
+            if (isMounted) setTelemetrySource("Waiting for ESP readings");
+            return;
+          }
+          if (!response.ok) {
+            throw new Error(`Telemetry request failed (${response.status}).`);
+          }
+
+          const result = await response.json();
+          const { temperature, humidity } = result.data || {};
+          if (
+            !result.success ||
+            !Number.isFinite(temperature) ||
+            !Number.isFinite(humidity)
+          ) {
+            throw new Error("Backend returned invalid ESP telemetry.");
+          }
+
+          if (isMounted) {
+            setTelemetry((previous) => ({
+              ...previous,
+              temperature,
+              humidity,
+            }));
+            setTelemetrySource("Live ESP readings");
+          }
+        } catch (error) {
+          console.error("Unable to read ESP telemetry:", error);
+          if (isMounted) setTelemetrySource("Backend unavailable");
+        }
+      };
+
+      fetchLatestTelemetry();
+      const interval = setInterval(fetchLatestTelemetry, 2000);
+
+      return () => {
+        isMounted = false;
+        clearInterval(interval);
+      };
+    }
+
     const interval = setInterval(() => {
       telemetryIndex.current =
         (telemetryIndex.current + 1) % sampleTelemetry.length;
@@ -192,31 +226,6 @@ export default function DashboardScreen() {
     setTelemetry((previous) => ({ ...previous, [key]: value }));
   };
 
-  const simulateWarning = () => {
-    setTelemetry((previous) => ({
-      ...previous,
-      temperature: 23.5,
-      humidity: 83,
-      co2: 850,
-      moisture: 72,
-    }));
-  };
-
-  const simulateEmergency = () => {
-    setTelemetry((previous) => ({
-      ...previous,
-      temperature: 28,
-      humidity: 78,
-      co2: 950,
-      moisture: 65,
-    }));
-  };
-
-  const resetTelemetry = () => {
-    telemetryIndex.current = 0;
-    setTelemetry(initialSensorData);
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
@@ -225,7 +234,7 @@ export default function DashboardScreen() {
       >
         <View style={styles.topBar}>
           <View>
-            <Text style={styles.brandEyebrow}>MYCOSENSE</Text>
+            <Text style={styles.brandEyebrow}>Dashboard</Text>
           </View>
         </View>
 
@@ -267,9 +276,7 @@ export default function DashboardScreen() {
         <View style={styles.sectionHeader}>
           <View>
             <Text style={styles.sectionTitle}>Room conditions</Text>
-            <Text style={styles.sectionCaption}>
-              Simulated readings from sample telemetry
-            </Text>
+            <Text style={styles.sectionCaption}>{telemetrySource}</Text>
           </View>
           <View style={styles.sectionAction}>
             <Ionicons name="pulse-outline" size={17} color="#55795A" />
@@ -374,6 +381,7 @@ export default function DashboardScreen() {
           ) : (
             alerts.map((alert) => {
               const isEmergency = alert.severity === "emergency";
+              const isExpanded = expandedAlertIds.has(alert.id);
               return (
                 <View
                   key={alert.id}
@@ -382,80 +390,64 @@ export default function DashboardScreen() {
                     isEmergency && styles.alertRowEmergency,
                   ]}
                 >
-                  <Ionicons
-                    name={isEmergency ? "warning" : "alert-circle-outline"}
-                    size={19}
-                    color={isEmergency ? "#B34D3D" : "#A96742"}
-                  />
-                  <View style={styles.alertCopy}>
-                    <Text
-                      style={[
-                        styles.alertTitle,
-                        isEmergency && styles.alertTitleEmergency,
-                      ]}
-                    >
-                      {alert.title}
-                    </Text>
-                    <Text style={styles.alertMessage}>{alert.summary}</Text>
-                    <Text style={styles.alertActionHeading}>
-                      Recommended steps
-                    </Text>
-                    {alert.actions.map((action, index) => (
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={`${alert.title} details`}
+                    accessibilityState={{ expanded: isExpanded }}
+                    onPress={() =>
+                      setExpandedAlertIds((previous) => {
+                        const next = new Set(previous);
+                        if (next.has(alert.id)) {
+                          next.delete(alert.id);
+                        } else {
+                          next.add(alert.id);
+                        }
+                        return next;
+                      })
+                    }
+                    style={styles.alertHeader}
+                  >
+                    <Ionicons
+                      name={isEmergency ? "warning" : "alert-circle-outline"}
+                      size={19}
+                      color={isEmergency ? "#B34D3D" : "#A96742"}
+                    />
+                    <View style={styles.alertCopy}>
                       <Text
-                        key={`${alert.id}-step-${index}`}
-                        style={styles.alertAction}
+                        style={[
+                          styles.alertTitle,
+                          isEmergency && styles.alertTitleEmergency,
+                        ]}
                       >
-                        {index + 1}. {action}
+                        {alert.title}
                       </Text>
-                    ))}
-                  </View>
+                    </View>
+                    <Ionicons
+                      name={isExpanded ? "chevron-up" : "chevron-down"}
+                      size={18}
+                      color={isEmergency ? "#B34D3D" : "#A96742"}
+                    />
+                  </Pressable>
+                  {isExpanded && (
+                    <View style={styles.alertDetails}>
+                      <Text style={styles.alertMessage}>{alert.summary}</Text>
+                      <Text style={styles.alertActionHeading}>
+                        Recommended steps
+                      </Text>
+                      {alert.actions.map((action, index) => (
+                        <Text
+                          key={`${alert.id}-step-${index}`}
+                          style={styles.alertAction}
+                        >
+                          {index + 1}. {action}
+                        </Text>
+                      ))}
+                    </View>
+                  )}
                 </View>
               );
             })
           )}
-          <View style={styles.alertDemo}>
-            <Text style={styles.alertDemoTitle}>Try a sample alert</Text>
-            <View style={styles.alertDemoActions}>
-              <Pressable
-                accessibilityRole="button"
-                onPress={simulateWarning}
-                style={({ pressed }) => [
-                  styles.alertDemoButton,
-                  pressed && styles.alertDemoButtonPressed,
-                ]}
-              >
-                <Text style={styles.alertDemoButtonText}>Test warning</Text>
-              </Pressable>
-              <Pressable
-                accessibilityRole="button"
-                onPress={simulateEmergency}
-                style={({ pressed }) => [
-                  styles.alertDemoButton,
-                  styles.alertDemoButtonEmergency,
-                  pressed && styles.alertDemoButtonPressed,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.alertDemoButtonText,
-                    styles.alertDemoButtonTextEmergency,
-                  ]}
-                >
-                  Test emergency
-                </Text>
-              </Pressable>
-              <Pressable
-                accessibilityRole="button"
-                onPress={resetTelemetry}
-                style={({ pressed }) => [
-                  styles.alertResetButton,
-                  pressed && styles.alertDemoButtonPressed,
-                ]}
-              >
-                <Text style={styles.alertResetButtonText}>Reset</Text>
-              </Pressable>
-            </View>
-          </View>
         </View>
 
         <View style={styles.sectionHeader}>
@@ -549,14 +541,14 @@ const styles = StyleSheet.create({
   },
   brandEyebrow: {
     color: "#7D8D75",
-    fontSize: 8,
-    fontFamily: "GoogleSans-SemiBold",
+    fontSize: 10,
+    fontFamily: "Pliant-Bold",
     letterSpacing: 1.4,
     marginBottom: 4,
   },
   brandTitle: {
-    color: "#29392E",
-    fontSize: 21,
+    color: "rgb(41, 57, 46)",
+    fontSize: 24,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.5,
   },
@@ -579,14 +571,14 @@ const styles = StyleSheet.create({
   },
   roomLabel: {
     color: "#84917D",
-    fontSize: 7,
+    fontSize: 10,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.7,
     marginBottom: 2,
   },
   roomName: {
     color: "#425744",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "GoogleSans-SemiBold",
   },
   statusCard: {
@@ -595,7 +587,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#315F42",
     borderRadius: 22,
     padding: 17,
-    marginBottom: 22,
+    marginBottom: 50,
   },
   statusCardAlert: {
     backgroundColor: "#74533B",
@@ -637,7 +629,7 @@ const styles = StyleSheet.create({
   },
   sampleText: {
     color: "#F0F3E9",
-    fontSize: 8,
+    fontSize: 12,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 0.9,
   },
@@ -653,14 +645,14 @@ const styles = StyleSheet.create({
   },
   statusTitle: {
     color: "#FFFFFF",
-    fontSize: 19,
+    fontSize: 22,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.4,
     marginBottom: 4,
   },
   statusDescription: {
     color: "#D3E0D0",
-    fontSize: 10,
+    fontSize: 13,
     lineHeight: 15,
     fontFamily: "Pliant-Regular",
   },
@@ -674,7 +666,7 @@ const styles = StyleSheet.create({
   },
   statusFooterText: {
     color: "#E0E9D9",
-    fontSize: 9,
+    fontSize: 12,
     fontFamily: "Pliant-Regular",
     marginLeft: 6,
   },
@@ -698,13 +690,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: "#2D3C31",
-    fontSize: 14,
+    fontSize: 20,
+    marginBottom: 5,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.2,
   },
   sectionCaption: {
     color: "#899286",
-    fontSize: 9,
+    fontSize: 14,
     fontFamily: "Pliant-Regular",
     marginTop: 3,
   },
@@ -722,7 +715,7 @@ const styles = StyleSheet.create({
     borderColor: "#E9EBE4",
     borderRadius: 18,
     paddingHorizontal: 12,
-    marginBottom: 21,
+    marginBottom: 50,
   },
   alertCount: {
     minWidth: 30,
@@ -738,7 +731,7 @@ const styles = StyleSheet.create({
   },
   alertCountText: {
     color: "#628353",
-    fontSize: 10,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
   },
   alertCountTextEmergency: {
@@ -750,7 +743,7 @@ const styles = StyleSheet.create({
     borderColor: "#E9EBE4",
     borderRadius: 18,
     paddingHorizontal: 13,
-    marginBottom: 21,
+    marginBottom: 40,
   },
   noAlerts: {
     minHeight: 65,
@@ -760,20 +753,23 @@ const styles = StyleSheet.create({
   noAlertsText: {
     flex: 1,
     color: "#71866B",
-    fontSize: 10,
+    fontSize: 13,
     lineHeight: 15,
     fontFamily: "Pliant-Regular",
     marginLeft: 9,
   },
   alertRow: {
-    minHeight: 66,
-    flexDirection: "row",
-    alignItems: "center",
+    paddingVertical: 13,
     borderBottomWidth: 1,
     borderBottomColor: "#EEF0EA",
   },
   alertRowEmergency: {
     backgroundColor: "#FFFBFA",
+  },
+  alertHeader: {
+    minHeight: 30,
+    flexDirection: "row",
+    alignItems: "center",
   },
   alertCopy: {
     flex: 1,
@@ -781,32 +777,38 @@ const styles = StyleSheet.create({
   },
   alertTitle: {
     color: "#A96742",
-    fontSize: 10,
-    fontFamily: "GoogleSans-SemiBold",
-    marginBottom: 3,
+    fontSize: 14,
+    fontFamily: "Pliant-Bold",
+    marginBottom: 0,
   },
   alertTitleEmergency: {
     color: "#B34D3D",
   },
+  alertDetails: {
+    marginLeft: 28,
+    marginTop: 8,
+  },
   alertMessage: {
     color: "#7C8879",
-    fontSize: 9,
+    fontSize: 14,
     lineHeight: 14,
+    marginBottom: 6,
     fontFamily: "Pliant-Regular",
   },
   alertActionHeading: {
     color: "#52634F",
-    fontSize: 9,
+    fontSize: 12,
     lineHeight: 14,
-    fontFamily: "GoogleSans-SemiBold",
+    fontFamily: "Pliant-Bold",
     marginTop: 6,
   },
   alertAction: {
     color: "#667263",
-    fontSize: 9,
+    fontSize: 14,
     lineHeight: 14,
     fontFamily: "Pliant-Regular",
     marginTop: 2,
+    marginBottom: 7,
   },
   alertDemo: {
     paddingTop: 11,
@@ -814,8 +816,8 @@ const styles = StyleSheet.create({
   },
   alertDemoTitle: {
     color: "#899286",
-    fontSize: 9,
-    fontFamily: "GoogleSans-SemiBold",
+    fontSize: 13,
+    fontFamily: "Pliant-Bold",
     marginBottom: 8,
   },
   alertDemoActions: {
@@ -838,8 +840,8 @@ const styles = StyleSheet.create({
   },
   alertDemoButtonText: {
     color: "#A96742",
-    fontSize: 9,
-    fontFamily: "GoogleSans-SemiBold",
+    fontSize: 13,
+    fontFamily: "Pliant-Bold",
   },
   alertDemoButtonTextEmergency: {
     color: "#B34D3D",
@@ -850,8 +852,8 @@ const styles = StyleSheet.create({
   },
   alertResetButtonText: {
     color: "#7C8879",
-    fontSize: 9,
-    fontFamily: "GoogleSans-SemiBold",
+    fontSize: 13,
+    fontFamily: "Pliant-Bold",
   },
   metricCard: {
     minHeight: 76,
@@ -876,13 +878,13 @@ const styles = StyleSheet.create({
   },
   metricLabel: {
     color: "#334237",
-    fontSize: 11,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
     marginBottom: 4,
   },
   metricTarget: {
     color: "#929A8F",
-    fontSize: 9,
+    fontSize: 12,
     fontFamily: "Pliant-Regular",
   },
   metricReading: {
@@ -896,13 +898,13 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     color: "#293A2F",
-    fontSize: 17,
+    fontSize: 19,
     fontFamily: "Pliant-Bold",
     letterSpacing: -0.4,
   },
   metricUnit: {
     color: "#778275",
-    fontSize: 9,
+    fontSize: 14,
     fontFamily: "Pliant-Regular",
     marginLeft: 3,
   },

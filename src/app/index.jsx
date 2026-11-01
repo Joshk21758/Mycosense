@@ -67,9 +67,8 @@ export default function LandingScreen() {
             <Text style={styles.heroAccent}>ease and control.</Text>
           </Text>
           <Text style={styles.heroDescription}>
-            We as MycoSense help our mushroom growing farmers make better
-            decisions and actionable steps to prevent crop loss & damage. With
-            the help of environmental sensors to monitor your crops efficiently.
+            Smarter, sustainable and more efficient mushroom cultivation with
+            MycoSense.
           </Text>
           <TouchableOpacity
             accessibilityRole="button"
@@ -96,7 +95,7 @@ export default function LandingScreen() {
 
         <View style={styles.sectionHeading}>
           <View>
-            <Text style={styles.sectionEyebrow}>APP FEATURES</Text>
+            <Text style={styles.sectionEyebrow}>HOW THE APP WORKS</Text>
           </View>
         </View>
 
@@ -207,6 +206,7 @@ const styles = StyleSheet.create({
   },
   heroCard: {
     overflow: "hidden",
+    opacity: 0.9,
     position: "relative",
     backgroundColor: "#284F39",
     borderRadius: 25,
@@ -270,8 +270,8 @@ const styles = StyleSheet.create({
   },
   heroDescription: {
     maxWidth: 305,
-    color: "#D4DED1",
-    fontSize: 12,
+    color: "#ffffff",
+    fontSize: 14,
     fontFamily: "Pliant-Regular",
     lineHeight: 18,
     marginBottom: 17,
@@ -282,16 +282,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#F6F7F0",
+    backgroundColor: "#9cb608",
     borderRadius: 15,
     paddingLeft: 15,
     paddingRight: 6,
     marginBottom: 15,
   },
   primaryButtonText: {
-    color: "#294B35",
-    fontSize: 11,
-    fontFamily: "GoogleSans-SemiBold",
+    color: "#ffffff",
+    fontSize: 14,
+    fontFamily: "Pliant-Bold",
     marginRight: 16,
   },
   buttonIcon: {
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   },
   sectionEyebrow: {
     color: "#7A8B72",
-    fontSize: 9,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
     letterSpacing: 1.1,
     marginBottom: 5,
@@ -387,13 +387,13 @@ const styles = StyleSheet.create({
   },
   featureTitle: {
     color: "#2D3C31",
-    fontSize: 11,
-    fontFamily: "GoogleSans-SemiBold",
-    marginBottom: 3,
+    fontSize: 14,
+    fontFamily: "Pliant-Bold",
+    marginBottom: 10,
   },
   featureDescription: {
     color: "#7D887D",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "Pliant-Regular",
     lineHeight: 14,
   },
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
   },
   footerBrandText: {
     color: "#536454",
-    fontSize: 10,
+    fontSize: 13,
     fontFamily: "GoogleSans-SemiBold",
   },
   footerLinks: {
