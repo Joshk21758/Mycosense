@@ -118,7 +118,9 @@ export default function CameraScreen() {
                   <Ionicons name="leaf" size={48} color="#E6EBD8" />
                   <View style={styles.mushroomBase} />
                 </View>
-                <Text style={styles.previewTitle}>Your crop in focus</Text>
+                <Text style={styles.previewTitle}>
+                  Place the mushroom in focus
+                </Text>
                 <Text style={styles.previewDescription}>
                   Add a photo to start a quick check
                 </Text>
@@ -161,10 +163,15 @@ export default function CameraScreen() {
               {isPickingImage ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
               ) : (
-                <Ionicons name="camera-outline" size={19} color="#FFFFFF" />
+                <Ionicons
+                  name="camera-outline"
+                  style={{ marginTop: -6 }}
+                  size={19}
+                  color="#FFFFFF"
+                />
               )}
               <Text style={styles.cameraButtonText}>
-                {isPickingImage ? "Opening…" : "Take a photo"}
+                {isPickingImage ? "Opening…" : "Capture"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -174,7 +181,12 @@ export default function CameraScreen() {
               onPress={() => pickImage("library")}
               style={[styles.uploadButton, isPickingImage && styles.disabled]}
             >
-              <Ionicons name="images-outline" size={19} color="#3D6B4A" />
+              <Ionicons
+                name="images-outline"
+                style={{ marginTop: -6 }}
+                size={19}
+                color="#3D6B4A"
+              />
               <Text style={styles.uploadButtonText}>Choose a photo</Text>
             </TouchableOpacity>
           </View>

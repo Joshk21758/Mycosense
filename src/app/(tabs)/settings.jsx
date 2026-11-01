@@ -12,8 +12,8 @@ import {
 } from "react-native";
 
 export default function SettingsScreen() {
-  const [targetHumidity, setTargetHumidity] = useState("90");
-  const [targetTemp, setTargetTemp] = useState("24");
+  const [targetHumidity, setTargetHumidity] = useState("");
+  const [targetTemp, setTargetTemp] = useState("");
   const [autoControl, setAutoControl] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
 

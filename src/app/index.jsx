@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  ImageBackground,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -13,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const highlights = [
   {
     icon: "pulse-outline",
-    title: "See how your mushrooms are doing",
+    title: "Growing conditions",
     description:
       "Check the heat, moisture, and fresh air in your farm room to monitor live sensor readings.",
     color: "#447858",
@@ -21,14 +22,14 @@ const highlights = [
   },
   {
     icon: "calculator-outline",
-    title: "Calculate your profits and crop yield",
+    title: "Cost calculator",
     description: "Estimate your harvest, cash flow, costs.",
     color: "#A47C3D",
     background: "#F5EFE2",
   },
   {
     icon: "scan-outline",
-    title: "Check for infections in your mushrooms",
+    title: "Disease detection",
     description:
       "Use your camera to take photos of your plants and get the best remedies.",
     color: "#557C91",
@@ -54,7 +55,11 @@ export default function LandingScreen() {
           </View>
         </View>
 
-        <View style={styles.heroCard}>
+        <ImageBackground
+          source={require("../../assets/images/home-bg.jpg")}
+          style={styles.heroCard}
+          resizeMode="cover"
+        >
           <View style={styles.heroGlow} />
           <View style={styles.heroTopline}></View>
           <Text style={styles.heroTitle}>
@@ -87,11 +92,11 @@ export default function LandingScreen() {
               Read the information to below to help you get started.
             </Text>
           </View>
-        </View>
+        </ImageBackground>
 
         <View style={styles.sectionHeading}>
           <View>
-            <Text style={styles.sectionEyebrow}>HOW THE APP WORKS</Text>
+            <Text style={styles.sectionEyebrow}>APP FEATURES</Text>
           </View>
         </View>
 
@@ -112,7 +117,6 @@ export default function LandingScreen() {
                   {feature.description}
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" size={16} color="#AAB3A7" />
             </View>
           ))}
         </View>
@@ -120,7 +124,7 @@ export default function LandingScreen() {
         <View style={styles.footer}>
           <View style={styles.footerBrand}>
             <Text style={styles.footerBrandText}>
-              Let us help you improve your harvest
+              Let us help you improve your harvest and plant growth
             </Text>
           </View>
           <View style={styles.footerLinks}>
